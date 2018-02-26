@@ -50,6 +50,7 @@
   
   self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:view];
   
+  [self startPreview];
   [EAGLContext setCurrentContext:self.context];
 }
 
@@ -105,8 +106,12 @@
   }
 }
 
-- (IBAction)startPreviewPressed:(id)sender {
-  [self startPreview];
+- (IBAction)startScanningPressed:(id)sender {
+  [self startScanning];
+}
+
+- (IBAction)stopScanningPressed:(id)sender {
+  [self stopScanning];
 }
 
 - (void)startPreview {
@@ -121,6 +126,30 @@
       dispatch_async(dispatch_get_main_queue(), ^{
       [(ScanView*)self.view resizeView];
       });
+    });
+  }
+}
+
+- (void)startScanning{
+    // Make sure we are not already running and that we have a valid capture directory
+  if( !ScandyCoreManager.scandyCorePtr->isRunning()){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      
+      [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
+      
+      ScandyCoreManager.scandyCorePtr->startScanning();
+    });
+  }
+}
+
+- (void)stopScanning{
+    // Make sure we are not already running and that we have a valid capture directory
+  if( !ScandyCoreManager.scandyCorePtr->isRunning()){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      
+      [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
+      
+      ScandyCoreManager.scandyCorePtr->stopScanning();
     });
   }
 }
