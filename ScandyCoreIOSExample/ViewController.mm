@@ -139,14 +139,14 @@
 }
 
 - (void)startPreview {
-    // Make sure we are not already running and that we have a valid capture directory
+  // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
 
       [self requestCamera];
-        // Make sure we're the right size
+      // Make sure we're the right size
       dispatch_async(dispatch_get_main_queue(), ^{
       [(ScanView*)self.view resizeView];
       });
@@ -179,8 +179,14 @@
   
   // Make sure we are running before trying to stop
   if( ScandyCoreManager.scandyCorePtr->isRunning()){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       ScandyCoreManager.scandyCorePtr->stopScanning();
+    });
+    
+    // Make sure the pipeline has fully stopped before calling generate mesh
+    // this is why we dispatch_asyng on main queue separately
+    dispatch_async(dispatch_get_main_queue(), ^{
+      ScandyCoreManager.scandyCorePtr->generateMesh();
     });
   }
 }
