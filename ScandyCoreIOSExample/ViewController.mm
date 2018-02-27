@@ -138,6 +138,27 @@
   [self stopScanning];
 }
 
+- (IBAction)saveMeshPressed:(id)sender {
+  
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+  [dateFormatter setLocale:enUSPOSIXLocale];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
+  
+  NSDate *now = [NSDate date];
+  NSString *iso8601String = [dateFormatter stringFromDate:now];
+  
+  NSString *fileName = [NSString stringWithFormat:@"scandycoreiosexample_%@.ply", iso8601String];
+  
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+  NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+  NSLog(@"save file to: %@", filePath);
+
+  // save the mesh!
+  ScandyCoreManager.scandyCorePtr->saveMesh(std::string([filePath UTF8String]));
+}
+
 - (void)startPreview {
   // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
@@ -189,6 +210,8 @@
       ScandyCoreManager.scandyCorePtr->generateMesh();
     });
   }
+  
+  [self.saveMeshButton setHidden:false];
 }
 
 

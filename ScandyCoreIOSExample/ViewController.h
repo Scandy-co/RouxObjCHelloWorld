@@ -25,6 +25,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *stopScanButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *saveMeshButton;
+
 @property (strong, nonatomic) NSTimer *m_render_loop;
 
 @property (strong, nonatomic) EAGLContext *context;

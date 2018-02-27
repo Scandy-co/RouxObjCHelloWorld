@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -41,7 +43,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-  <key>NSCameraUsageDescription</key>
-  <string>ScandyCoreIOSExample uses your TrueDepth camera to capture 3D scans</string>
+	<key>NSCameraUsageDescription</key>
+	<string>ScandyCoreIOSExample uses your TrueDepth camera to capture 3D scans</string>
 </dict>
 </plist>
