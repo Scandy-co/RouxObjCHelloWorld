@@ -162,8 +162,8 @@
   
   [self.stopScanButton setHidden:false];
   
-    // Make sure we are not already running and that we have a valid capture directory
-  if( !ScandyCoreManager.scandyCorePtr->isRunning()){
+  // Make sure we are running from preview first
+  if( ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
@@ -177,12 +177,9 @@
   
   [self.stopScanButton setHidden:true];
   
-    // Make sure we are not already running and that we have a valid capture directory
-  if( !ScandyCoreManager.scandyCorePtr->isRunning()){
+  // Make sure we are running before trying to stop
+  if( ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-      
-      [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
-      
       ScandyCoreManager.scandyCorePtr->stopScanning();
     });
   }
