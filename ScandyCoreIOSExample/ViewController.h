@@ -17,6 +17,14 @@
 
 @interface ViewController : GLKViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *scanSizeLabel;
+
+@property (weak, nonatomic) IBOutlet UISlider *scanSizeSlider;
+
+@property (weak, nonatomic) IBOutlet UIButton *startScanButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *stopScanButton;
+
 @property (strong, nonatomic) NSTimer *m_render_loop;
 
 @property (strong, nonatomic) EAGLContext *context;

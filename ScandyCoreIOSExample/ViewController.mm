@@ -20,6 +20,28 @@
 
 @implementation ViewController
 
+  // NOTE: minimum scan size should be at least 0.2 meters for bare minimum surface scans because
+  // the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
+
+  // the minimum size of scan volume's dimensions in meters
+  float minSize = 0.2;
+
+  // the maximum size of scan volume's dimensions in meters
+  float maxSize = 5;
+
+- (IBAction)scanSizeChanged:(id)sender {
+  
+  float range = maxSize - minSize;
+  
+  // normalize the scan size based on default slider value range [0, 1]
+  float scan_size = (range * self.scanSizeSlider.value) + minSize;
+  
+  self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
+  
+  ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
+}
+
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:(BOOL)animated];
   
@@ -49,6 +71,8 @@
   [EAGLContext setCurrentContext:self.context];
   
   self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:view];
+  
+  [self.stopScanButton setHidden:true];
   
   [self startPreview];
   [EAGLContext setCurrentContext:self.context];
@@ -131,6 +155,13 @@
 }
 
 - (void)startScanning{
+  
+  [self.scanSizeLabel setHidden:true];
+  [self.scanSizeSlider setHidden:true];
+  [self.startScanButton setHidden:true];
+  
+  [self.stopScanButton setHidden:false];
+  
     // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -143,6 +174,9 @@
 }
 
 - (void)stopScanning{
+  
+  [self.stopScanButton setHidden:true];
+  
     // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

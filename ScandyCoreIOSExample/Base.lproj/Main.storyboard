@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tNc-vE-dkL">
-                                <rect key="frame" x="95" y="534" width="184" height="48"/>
+                                <rect key="frame" x="95" y="519" width="184" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start Scanning"/>
                                 <connections>
@@ -27,16 +27,36 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4S3-9y-XfC">
-                                <rect key="frame" x="106" y="590" width="162" height="30"/>
+                                <rect key="frame" x="106" y="555" width="162" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Stop Scanning"/>
                                 <connections>
                                     <action selector="stopScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="97N-0v-kkj"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="MGZ-4o-UTc">
+                                <rect key="frame" x="30" y="624" width="315" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="scanSizeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="fE1-PN-5Et"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan Size: 2.00 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Lt-QR-FeK">
+                                <rect key="frame" x="106" y="602" width="162" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.10439151023890858" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="U1d-gS-gC5"/>
                     </glkView>
+                    <connections>
+                        <outlet property="scanSizeLabel" destination="8Lt-QR-FeK" id="jSD-Th-gM0"/>
+                        <outlet property="scanSizeSlider" destination="MGZ-4o-UTc" id="ZgK-OP-WJR"/>
+                        <outlet property="startScanButton" destination="tNc-vE-dkL" id="gw2-dj-CXF"/>
+                        <outlet property="stopScanButton" destination="4S3-9y-XfC" id="jfv-I1-R3q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
