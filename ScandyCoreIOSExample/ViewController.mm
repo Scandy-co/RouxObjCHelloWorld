@@ -52,10 +52,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
   
   // Get our ScandyCore object
-  // TODO get proper licent here
+  // TODO get proper license here
   ScandyCoreManager.scandyCorePtr->setLicense("");
   
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
@@ -75,13 +74,11 @@
   [self.stopScanButton setHidden:true];
   
   [self startPreview];
-  [EAGLContext setCurrentContext:self.context];
 }
 
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 
@@ -102,29 +99,10 @@
     }
     case AVCamSetupResultCameraNotAuthorized:
     {
-        //      dispatch_async( dispatch_get_main_queue(), ^{
-        //        NSString *message = NSLocalizedString( @"Scandy Core doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
-        //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Scandy Core" message:message preferredStyle:UIAlertControllerStyleAlert];
-        //        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
-        //        [alertController addAction:cancelAction];
-        //        // Provide quick access to Settings.
-        //        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"Alert button to open Settings" ) style:UIAlertActionStyleDefault handler:^( UIAlertAction *action ) {
-        //          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-        //        }];
-        //        [alertController addAction:settingsAction];
-        //        [self presentViewController:alertController animated:YES completion:nil];
-        //      } );
       break;
     }
     case AVCamSetupResultSessionConfigurationFailed:
     {
-        //      dispatch_async( dispatch_get_main_queue(), ^{
-        //        NSString *message = NSLocalizedString( @"Unable to capture media", @"Alert message when something goes wrong during capture session configuration" );
-        //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Scandy Core" message:message preferredStyle:UIAlertControllerStyleAlert];
-        //        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
-        //        [alertController addAction:cancelAction];
-        //        [self presentViewController:alertController animated:YES completion:nil];
-        //      } );
       break;
     }
   }
@@ -167,7 +145,8 @@
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
 
       [self requestCamera];
-      // Make sure we're the right size
+      
+      // Make sure our view is the right size
       dispatch_async(dispatch_get_main_queue(), ^{
       [(ScanView*)self.view resizeView];
       });
@@ -208,6 +187,7 @@
     // this is why we dispatch_asyng on main queue separately
     dispatch_async(dispatch_get_main_queue(), ^{
       ScandyCoreManager.scandyCorePtr->generateMesh();
+
     });
   }
   
