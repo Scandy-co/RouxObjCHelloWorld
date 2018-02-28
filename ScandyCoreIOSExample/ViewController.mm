@@ -29,6 +29,7 @@
   // the maximum size of scan volume's dimensions in meters
   float maxSize = 5;
 
+// update scan size based on slider
 - (IBAction)scanSizeChanged:(id)sender {
   
   float range = maxSize - minSize;
@@ -76,6 +77,26 @@
   [self startPreview];
 }
 
+// here you can set the initial scan state with things like scan size, resolution, bounding box offset
+// from camera, and so on. All these things can be changed programmatically while the preview is running
+// as well, but they cannot change during an active scan.
+- (void)setupScanConfiguration{
+
+  // make sure this runs in the same queue as initializeScanner, so our configurations won't get reset
+  dispatch_async(dispatch_get_main_queue(), ^{
+    // The scan size represents the width, height, and depth (in meters) of the scan volume's bounding box, which
+    // must all be the same value.
+    // set the initial scan size to 0.5m x 0.5m x 0.5m
+    float scan_size = 0.5;
+    ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
+    
+    // update the scan slider to match for the sake of this example
+    self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
+    self.scanSizeSlider.value = (scan_size - minSize)/(maxSize - minSize);
+  });
+  
+  
+}
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -145,6 +166,10 @@
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
 
       [self requestCamera];
+      
+      // NOTE: it's important to call this after startPreview because we need the scanner to
+      // have been initialized so that the configuration changes will persist
+      [self setupScanConfiguration];
       
       // Make sure our view is the right size
       dispatch_async(dispatch_get_main_queue(), ^{
