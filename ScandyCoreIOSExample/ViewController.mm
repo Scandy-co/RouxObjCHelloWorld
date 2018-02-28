@@ -78,8 +78,8 @@
 }
 
 // here you can set the initial scan state with things like scan size, resolution, bounding box offset
-// from camera, and so on. All these things can be changed programmatically while the preview is running
-// as well, but they cannot change during an active scan.
+// from camera, viewport orientation and so on. All these things can be changed programmatically while
+// the preview is running as well, but they cannot change during an active scan.
 - (void)setupScanConfiguration{
 
   // make sure this runs in the same queue as initializeScanner, so our configurations won't get reset
@@ -93,6 +93,13 @@
     // update the scan slider to match for the sake of this example
     self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
     self.scanSizeSlider.value = (scan_size - minSize)/(maxSize - minSize);
+    
+    // Set the orientation to up upright and mirrored (EXIFOrienation::SIX). This is the default orientation
+    // that's set for the TrueDepth sensor in initializeScanner because it's easiest to use when scanning with
+    // the front-facing sensor while looking at the screen. You can change it to one of the other seven orientations
+    // here. For example, if you want to cast the screen while scanning, using EXIFOrientation::SEVEN would allow a
+    // more natural view for when the sensor is facing away from you.
+    ScandyCoreManager.scandyCorePtr->setDepthCameraEXIFOrientation(scandy::utilities::EXIFOrientation::SIX);
   });
   
   
