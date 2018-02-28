@@ -20,7 +20,8 @@
 
 @implementation ViewController
 
-  // NOTE: minimum scan size should be at least 0.2 meters for bare minimum surface scans because
+  // NOTE: if using the default bounding box offset of 0 meters from the sensor, then the
+  // minimum scan size should be at least 0.2 meters for bare minimum surface scans because
   // the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
 
   // the minimum size of scan volume's dimensions in meters
@@ -84,11 +85,19 @@
 
   // make sure this runs in the same queue as initializeScanner, so our configurations won't get reset
   dispatch_async(dispatch_get_main_queue(), ^{
+    
     // The scan size represents the width, height, and depth (in meters) of the scan volume's bounding box, which
     // must all be the same value.
     // set the initial scan size to 0.5m x 0.5m x 0.5m
     float scan_size = 0.5;
     ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
+    
+    // Set the bounding box offset 0.2 meters from the sensor to be able to use the full bounding box for
+    // scanning since the TrueDepth sensor can't see before about 0.15m
+    // We recommend not setting this too much farther than you need to because the quality of depth data
+    // degrades farther away from the sensor
+    float offset = 0.2;
+    ScandyCoreManager.scandyCorePtr->setBoundingBoxOffset(offset);
     
     // update the scan slider to match for the sake of this example
     self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
