@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		835205F6204F42950032AC0E /* ScandyCoreLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835205F5204F42950032AC0E /* ScandyCoreLicense.txt */; };
 		83986FFC20409ED3007F6660 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83986FFB20409ED3007F6660 /* Metal.framework */; };
 		83C2BE4B203F370D00A5D1F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4A203F370D00A5D1F0 /* AppDelegate.m */; };
 		83C2BE4E203F370D00A5D1F0 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4D203F370D00A5D1F0 /* ViewController.mm */; };
@@ -37,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		835205F5204F42950032AC0E /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = ScandyCoreLicense/ScandyCoreLicense.txt; sourceTree = "<group>"; };
 		83986FFB20409ED3007F6660 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		83C2BE46203F370D00A5D1F0 /* ScandyCoreIOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScandyCoreIOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83C2BE49203F370D00A5D1F0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		83C2BE3D203F370D00A5D1F0 = {
 			isa = PBXGroup;
 			children = (
+				835205F5204F42950032AC0E /* ScandyCoreLicense.txt */,
 				83C2BE48203F370D00A5D1F0 /* ScandyCoreIOSExample */,
 				83C2BE47203F370D00A5D1F0 /* Products */,
 				83C2BE5F203F39C500A5D1F0 /* Frameworks */,
@@ -181,6 +184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835205F6204F42950032AC0E /* ScandyCoreLicense.txt in Resources */,
 				83C2BE56203F370D00A5D1F0 /* LaunchScreen.storyboard in Resources */,
 				83C2BE53203F370D00A5D1F0 /* Assets.xcassets in Resources */,
 				83C2BE51203F370D00A5D1F0 /* Main.storyboard in Resources */,

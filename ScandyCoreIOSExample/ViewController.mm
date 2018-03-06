@@ -55,9 +55,15 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Get our ScandyCore object
-  // TODO get proper license here
-  ScandyCoreManager.scandyCorePtr->setLicense("");
+  // Get license to use ScandyCore
+  NSString *licensePath = [[NSBundle mainBundle] pathForResource:@"ScandyCoreLicense" ofType:@"txt"];
+  NSString *licenseString = [NSString stringWithContentsOfFile:licensePath encoding:NSUTF8StringEncoding error:NULL];
+  
+  // convert license to cString
+  const char* licenseCString = [licenseString cStringUsingEncoding:NSUTF8StringEncoding];
+  
+  // Get access to use ScandyCore
+  ScandyCoreManager.scandyCorePtr->setLicense(licenseCString);
   
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
   
