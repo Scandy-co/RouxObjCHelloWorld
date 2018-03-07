@@ -10,9 +10,6 @@
 
 #import "ViewController.h"
 
-#import <ScandyCoreIOS/ScandyCoreFramework.h>
-#import <ScandyCoreIOS/ScandyCoreView.h>
-
 #import <AVFoundation/AVFoundation.h>
 #import <GLKit/GLKit.h>
 

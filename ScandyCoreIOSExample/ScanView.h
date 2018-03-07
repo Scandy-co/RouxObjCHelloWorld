@@ -9,8 +9,7 @@
 #ifndef ScanView_h
 #define ScanView_h
 
-#import <ScandyCoreIOS/ScandyCoreFramework.h>
-#import <ScandyCoreIOS/ScandyCoreView.h>
+#import <ScandyCore/ScandyCore.h>
 
 #import <GLKit/GLKit.h>
 

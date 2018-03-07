@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		835205F6204F42950032AC0E /* ScandyCoreLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835205F5204F42950032AC0E /* ScandyCoreLicense.txt */; };
+		835206BE2050855D0032AC0E /* ScandyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835206BD2050855D0032AC0E /* ScandyCore.framework */; };
+		835206BF205085720032AC0E /* ScandyCore.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 835206BD2050855D0032AC0E /* ScandyCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83986FFC20409ED3007F6660 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83986FFB20409ED3007F6660 /* Metal.framework */; };
 		83C2BE4B203F370D00A5D1F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4A203F370D00A5D1F0 /* AppDelegate.m */; };
 		83C2BE4E203F370D00A5D1F0 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4D203F370D00A5D1F0 /* ViewController.mm */; };
@@ -15,9 +17,7 @@
 		83C2BE53203F370D00A5D1F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83C2BE52203F370D00A5D1F0 /* Assets.xcassets */; };
 		83C2BE56203F370D00A5D1F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83C2BE54203F370D00A5D1F0 /* LaunchScreen.storyboard */; };
 		83C2BE59203F370D00A5D1F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE58203F370D00A5D1F0 /* main.m */; };
-		83C2BE9A203F406800A5D1F0 /* ScandyCoreIOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83C2BE60203F39C500A5D1F0 /* ScandyCoreIOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83C2BE9C203F491700A5D1F0 /* ScanView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE9B203F491700A5D1F0 /* ScanView.mm */; };
-		83C2BE9E203F61F400A5D1F0 /* ScandyCoreIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C2BE60203F39C500A5D1F0 /* ScandyCoreIOS.framework */; };
 		83C2BEA0203F706800A5D1F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C2BE9F203F706800A5D1F0 /* AVFoundation.framework */; };
 		83C2BEA2203F707300A5D1F0 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C2BEA1203F707300A5D1F0 /* GLKit.framework */; };
 		83C2BEA4203F77CD00A5D1F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C2BEA3203F77CD00A5D1F0 /* Foundation.framework */; };
@@ -25,20 +25,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		83C2BE90203F3AEA00A5D1F0 /* CopyFiles */ = {
+		83C2BE90203F3AEA00A5D1F0 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				83C2BE9A203F406800A5D1F0 /* ScandyCoreIOS.framework in CopyFiles */,
+				835206BF205085720032AC0E /* ScandyCore.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		835205F5204F42950032AC0E /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = ScandyCoreLicense/ScandyCoreLicense.txt; sourceTree = "<group>"; };
+		835206BD2050855D0032AC0E /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "../scandy-core/build-ios/internal_only/ios/Debug-iphoneos/ScandyCore.framework"; sourceTree = "<group>"; };
 		83986FFB20409ED3007F6660 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		83C2BE46203F370D00A5D1F0 /* ScandyCoreIOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScandyCoreIOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83C2BE49203F370D00A5D1F0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -50,7 +52,6 @@
 		83C2BE55203F370D00A5D1F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83C2BE57203F370D00A5D1F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83C2BE58203F370D00A5D1F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		83C2BE60203F39C500A5D1F0 /* ScandyCoreIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCoreIOS.framework; path = "../scandy-core/build-ios/internal_only/ios/Debug-iphoneos/ScandyCoreIOS.framework"; sourceTree = "<group>"; };
 		83C2BE9B203F491700A5D1F0 /* ScanView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ScanView.mm; sourceTree = "<group>"; };
 		83C2BE9D203F492900A5D1F0 /* ScanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanView.h; sourceTree = "<group>"; };
 		83C2BE9F203F706800A5D1F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -64,12 +65,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835206BE2050855D0032AC0E /* ScandyCore.framework in Frameworks */,
 				83986FFC20409ED3007F6660 /* Metal.framework in Frameworks */,
 				83C2BEA6203F77DC00A5D1F0 /* CoreGraphics.framework in Frameworks */,
 				83C2BEA4203F77CD00A5D1F0 /* Foundation.framework in Frameworks */,
 				83C2BEA2203F707300A5D1F0 /* GLKit.framework in Frameworks */,
 				83C2BEA0203F706800A5D1F0 /* AVFoundation.framework in Frameworks */,
-				83C2BE9E203F61F400A5D1F0 /* ScandyCoreIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,12 +116,12 @@
 		83C2BE5F203F39C500A5D1F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				835206BD2050855D0032AC0E /* ScandyCore.framework */,
 				83986FFB20409ED3007F6660 /* Metal.framework */,
 				83C2BEA5203F77DC00A5D1F0 /* CoreGraphics.framework */,
 				83C2BEA3203F77CD00A5D1F0 /* Foundation.framework */,
 				83C2BEA1203F707300A5D1F0 /* GLKit.framework */,
 				83C2BE9F203F706800A5D1F0 /* AVFoundation.framework */,
-				83C2BE60203F39C500A5D1F0 /* ScandyCoreIOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -135,7 +136,7 @@
 				83C2BE42203F370D00A5D1F0 /* Sources */,
 				83C2BE43203F370D00A5D1F0 /* Frameworks */,
 				83C2BE44203F370D00A5D1F0 /* Resources */,
-				83C2BE90203F3AEA00A5D1F0 /* CopyFiles */,
+				83C2BE90203F3AEA00A5D1F0 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -349,7 +350,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ScandyCoreIOSExample/Frameworks/ScandyCoreIOS.framework/Headers/",
+					"$(PROJECT_DIR)/ScandyCoreIOSExample/Frameworks/ScandyCore.framework/Headers/",
 				);
 				INFOPLIST_FILE = ScandyCoreIOSExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
@@ -381,7 +382,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ScandyCoreIOSExample/Frameworks/ScandyCoreIOS.framework/Headers/",
+					"$(PROJECT_DIR)/ScandyCoreIOSExample/Frameworks/ScandyCore.framework/Headers/",
 				);
 				INFOPLIST_FILE = ScandyCoreIOSExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;

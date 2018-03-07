@@ -9,9 +9,7 @@
 
 
 #import "ScanView.h"
-#import <ScandyCoreIOS/VTKGestureHandler.h>
 
-#import <ScandyCoreIOS/ScandyCoreFramework.h>
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 

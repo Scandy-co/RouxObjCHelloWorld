@@ -8,9 +8,6 @@
 
 #include "ScanView.h"
 
-#import <ScandyCoreIOS/ScandyCoreFramework.h>
-#import <ScandyCoreIOS/ScandyCoreView.h>
-
 #import <Foundation/Foundation.h>
 
 @implementation ScanView
