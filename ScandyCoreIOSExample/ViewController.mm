@@ -37,6 +37,7 @@
   
   self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
   
+  // update the scan size to a cube of scan_size x scan_size x scan_size
   ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
 }
 
@@ -68,12 +69,14 @@
     NSLog(@"Failed to create ES context");
   }
   
+  // Connect our ScanView with this ViewController
   ScanView *view = (ScanView *)self.view;
   view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
   
   [EAGLContext setCurrentContext:self.context];
   
+  // Tell vtk to handle touch events when viewing a mesh
   self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:view];
   
   [self.stopScanButton setHidden:true];
@@ -128,11 +131,13 @@
     case AVCamSetupResultSuccess:
     {
       dispatch_async( dispatch_get_main_queue(), ^{
+        
+        // Initialize the TrueDepth scanner before starting preview
         ScandyCoreManager.scandyCorePtr->initializeScanner(scandy::core::ScannerType::TRUE_DEPTH);
         
         ScandyCoreManager.scandyCorePtr->startPreview();
         
-        NSLog(@"starting render");
+        // Tell our ScanView when to render
         self.m_render_loop = [NSTimer scheduledTimerWithTimeInterval:RENDER_REFRESH_RATE target:(ScanView*)self.view selector:@selector(render) userInfo:nil repeats:YES];
       } );
       break;
@@ -182,12 +187,12 @@
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
+      // Request access to TrueDepth camera
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
-
       [self requestCamera];
       
-      // NOTE: it's important to call this after startPreview because we need the scanner to
-      // have been initialized so that the configuration changes will persist
+      // NOTE: it's important to call this after scandyCorePtr->startPreview() because
+      // we need the scanner to have been initialized so that the configuration changes will persist
       [self setupScanConfiguration];
       
       // Make sure our view is the right size
@@ -210,8 +215,6 @@
   if( ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
-      [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
-      
       ScandyCoreManager.scandyCorePtr->startScanning();
     });
   }
@@ -228,10 +231,10 @@
     });
     
     // Make sure the pipeline has fully stopped before calling generate mesh
-    // this is why we dispatch_asyng on main queue separately
+    // this is why we dispatch_async on main queue separately
     dispatch_async(dispatch_get_main_queue(), ^{
+      // Generate mesh and display it in the view
       ScandyCoreManager.scandyCorePtr->generateMesh();
-
     });
   }
   
