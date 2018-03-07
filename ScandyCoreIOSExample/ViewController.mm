@@ -191,7 +191,7 @@
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
       [self requestCamera];
       
-      // NOTE: it's important to call this after scandyCorePtr->startPreview() because
+      // NOTE: it's important to call this after scandyCorePtr->initializeScanner() because
       // we need the scanner to have been initialized so that the configuration changes will persist
       [self setupScanConfiguration];
       
