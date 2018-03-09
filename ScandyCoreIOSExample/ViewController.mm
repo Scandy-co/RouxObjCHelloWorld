@@ -68,20 +68,24 @@
   if (!self.context) {
     NSLog(@"Failed to create ES context");
   }
+
+  [EAGLContext setCurrentContext:self.context];
   
+  [self loadScanView];
+  
+  [self.stopScanButton setHidden:true];
+  
+  [self startPreview];
+}
+
+- (void)loadScanView{
   // Connect our ScanView with this ViewController
   ScanView *view = (ScanView *)self.view;
   view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
   
-  [EAGLContext setCurrentContext:self.context];
-  
-  // Tell vtk to handle touch events when viewing a mesh
+  // Tell vtk to handle touch events
   self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:view];
-  
-  [self.stopScanButton setHidden:true];
-  
-  [self startPreview];
 }
 
 // here you can set the initial scan state with things like scan size, resolution, bounding box offset
@@ -153,6 +157,10 @@
   }
 }
 
+- (IBAction)startPreviewPressed:(id)sender {
+  [self startPreview];
+}
+
 - (IBAction)startScanningPressed:(id)sender {
   [self startScanning];
 }
@@ -183,6 +191,15 @@
 }
 
 - (void)startPreview {
+ 
+  [self.scanSizeLabel setHidden:false];
+  [self.scanSizeSlider setHidden:false];
+  [self.startScanButton setHidden:false];
+
+  
+  [self.startPreviewButton setHidden:true];
+  [self.saveMeshButton setHidden:true];
+
   // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -228,6 +245,11 @@
   if( ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_main_queue(), ^{
       ScandyCoreManager.scandyCorePtr->stopScanning();
+      [ScandyCoreManager.scandyCameraDelegate stopCamera];
+    });
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [(ScanView*)self.view resizeView];
     });
     
     // Make sure the pipeline has fully stopped before calling generate mesh
@@ -236,9 +258,17 @@
       // Generate mesh and display it in the view
       ScandyCoreManager.scandyCorePtr->generateMesh();
     });
+    
+      // Make sure the pipeline has fully stopped before calling generate mesh
+      // this is why we dispatch_async on main queue separately
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        // Generate mesh and display it in the view
+//      ScandyCoreManager.scandyCorePtr->uninitializeScanner();
+//    });
   }
   
   [self.saveMeshButton setHidden:false];
+  [self.startPreviewButton setHidden:false];
 }
 
 

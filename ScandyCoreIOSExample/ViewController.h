@@ -19,6 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UISlider *scanSizeSlider;
 
+@property (weak, nonatomic) IBOutlet UIButton *startPreviewButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *startScanButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *stopScanButton;

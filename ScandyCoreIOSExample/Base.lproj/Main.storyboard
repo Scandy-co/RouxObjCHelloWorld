@@ -62,13 +62,23 @@
                                     <action selector="stopScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="97N-0v-kkj"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cE-Sw-Apu">
+                                <rect key="frame" x="101" y="624" width="173" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.80677604970000005" green="0.80677604970000005" blue="0.80677604970000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Start Preview"/>
+                                <connections>
+                                    <action selector="startPreviewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GRT-ot-tay"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="U1d-gS-gC5"/>
+                        <viewLayoutGuide key="safeArea" id="Ffe-8o-zT4"/>
                     </glkView>
                     <connections>
                         <outlet property="saveMeshButton" destination="2Fd-S3-UF4" id="y52-iV-gl3"/>
                         <outlet property="scanSizeLabel" destination="8Lt-QR-FeK" id="jSD-Th-gM0"/>
                         <outlet property="scanSizeSlider" destination="MGZ-4o-UTc" id="ZgK-OP-WJR"/>
+                        <outlet property="startPreviewButton" destination="1cE-Sw-Apu" id="myQ-tH-etN"/>
                         <outlet property="startScanButton" destination="tNc-vE-dkL" id="gw2-dj-CXF"/>
                         <outlet property="stopScanButton" destination="4S3-9y-XfC" id="jfv-I1-R3q"/>
                     </connections>
