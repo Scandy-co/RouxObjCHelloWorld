@@ -68,5 +68,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+ScandyCore.framework
 ScandyCoreIOS.framework
 **/ScandyCoreIOS.framework
