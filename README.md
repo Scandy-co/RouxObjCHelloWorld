@@ -1,4 +1,4 @@
-# Using ScandyCore.framework for iOS (iPhone X)
+# Using ScandyCore.framework for iOS (iPhone X TrueDepth)
 ## ScandyCore License
 Contact us to get a license to use ScandyCore. Then put the license string (without quotation marks) into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
 
@@ -54,7 +54,7 @@ Once the TrueDepth camera is started the next step is to call:
 ScandyCoreManager.scandyCorePtr->initializeScanner(scandy::core::ScannerType::TRUE_DEPTH);
 ```
 
-After the scanner is initialized, we can either start the preview or configure the scanning parameters like scan size, scan offset, etc. The order of these actions is not important except that the must happen after `initializeScanner`.
+After the scanner is initialized, we can either start the preview or configure the scanning parameters like scan size, scan offset, etc. The order of these two actions is not important except that they must happen after `initializeScanner`.
 
 From there we are ready to start the scanning process.
 
@@ -62,7 +62,37 @@ From there we are ready to start the scanning process.
 ScandyCoreManager.scandyCorePtr->startScanning();
 ```
 
-**NOTE: Scan configurations must be finalized before calling this beacuse they cannot be changed during scanning.**  
+**NOTE: Scan configurations must be finalized before calling `startScanning()` beacuse they cannot be changed during scanning.**  
 
-## 
+## Visualization
+### ScandyCoreView
+It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions to VTK interactions through `VTKGestureHandler` when viewing and interacting with a mesh.
 
+One thing you need to do when using this view is call its `render` function, which will tell the internal visualizer to render the current viewport (scanning or mesh). Our suggestion is to use an NSTimer in your GLKViewController to call `render` at your desired frame rate.
+
+The only other setup that needs to be done is attach the `VTKGestureHandler` to the view.
+
+```
+// Connect our ScanView with this ViewController
+ScandyCoreView *scan_view = (ScandyCoreView *)self.view;
+scan_view.context = self.context;
+scan_view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
+  
+// Tell vtk to handle touch events
+self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:scan_view];
+```
+### Custom Views
+If you want to create your own view, you can create and manage the internal vtk visualizer yourself through the `ScandyCore` pointer. 
+
+```
+// Creating the visualizer with initial width and height.  
+ScandyCoreManager.scandyCorePtr->createVisualizer(width, height);
+```
+
+Inside the `drawInRect` function of your GLKView you need to tell the internal visualizer to render.
+
+```
+ScandyCoreManager.scandyCorePtr->getVisualizer()->render();
+```
+
+**NOTE: Custom views are not fully supported in this release, so please use ScandyCoreView for best results.**
