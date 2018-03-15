@@ -201,7 +201,7 @@
 
   // Make sure we are not already running and that we have a valid capture directory
   if( !ScandyCoreManager.scandyCorePtr->isRunning()){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       
       // Request access to TrueDepth camera
       [ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
@@ -229,7 +229,7 @@
   
   // Make sure we are running from preview first
   if( ScandyCoreManager.scandyCorePtr->isRunning()){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       
       ScandyCoreManager.scandyCorePtr->startScanning();
     });
