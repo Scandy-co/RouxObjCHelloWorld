@@ -7,6 +7,7 @@
 //
 
 #include <scandy/core/IScandyCore.h>
+#include <scandy/core/getStatusString.h>
 
 #import "ViewController.h"
 
@@ -62,7 +63,7 @@
   
   // Get access to use ScandyCore
   ScandyCoreManager.scandyCorePtr->setLicense(licenseCString);
-  
+
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
   
   if (!self.context) {
@@ -137,9 +138,17 @@
       dispatch_async( dispatch_get_main_queue(), ^{
         
         // Initialize the TrueDepth scanner before starting preview
-        ScandyCoreManager.scandyCorePtr->initializeScanner(scandy::core::ScannerType::TRUE_DEPTH);
+        auto status = ScandyCoreManager.scandyCorePtr->initializeScanner(scandy::core::ScannerType::TRUE_DEPTH);
+
+        if( status != scandy::core::Status::SUCCESS){
+          NSLog(@"Could not initialize scanner: %s", scandy::core::getStatusString(status).c_str());
+        }
         
-        ScandyCoreManager.scandyCorePtr->startPreview();
+        status = ScandyCoreManager.scandyCorePtr->startPreview();
+
+        if( status != scandy::core::Status::SUCCESS){
+          NSLog(@"Could not start preview: %s", scandy::core::getStatusString(status).c_str());
+        }
         
         // Tell our ScanView when to render
         self.m_render_loop = [NSTimer scheduledTimerWithTimeInterval:RENDER_REFRESH_RATE target:(ScanView*)self.view selector:@selector(render) userInfo:nil repeats:YES];
