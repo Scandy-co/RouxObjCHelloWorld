@@ -1,0 +1,1 @@
+## Put ScandyCore.framework in here
