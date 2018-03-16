@@ -85,7 +85,7 @@
   view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
   
   // Tell vtk to handle touch events
-  self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:view];
+  self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:view];
 }
 
 // here you can set the initial scan state with things like scan size, resolution, bounding box offset
