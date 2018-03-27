@@ -266,10 +266,6 @@
       [ScandyCoreManager.scandyCameraDelegate stopCamera];
     });
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [(ScanView*)self.view resizeView];
-    });
-    
     // Make sure the pipeline has fully stopped before calling generate mesh
     // this is why we dispatch_async on main queue separately
     dispatch_async(dispatch_get_main_queue(), ^{
