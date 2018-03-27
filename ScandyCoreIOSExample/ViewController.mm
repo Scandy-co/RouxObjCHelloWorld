@@ -87,6 +87,9 @@
   
   // Tell vtk to handle touch events
   self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:view];
+  
+  // resizeView creates the internal visualizer
+  [(ScanView*)self.view resizeView];
 }
 
 // here you can set the initial scan state with things like scan size, resolution, bounding box offset
@@ -167,6 +170,13 @@
 }
 
 - (IBAction)startPreviewPressed:(id)sender {
+  
+  // clear out memory from previous session and reload the view
+  [ScandyCoreManager reset];
+
+  // reload the view and connect it to ScandyCore after reset
+  [self loadScanView];
+  
   [self startPreview];
 }
 
@@ -200,7 +210,7 @@
 }
 
 - (void)startPreview {
- 
+  
   [self.scanSizeLabel setHidden:false];
   [self.scanSizeSlider setHidden:false];
   [self.startScanButton setHidden:false];
