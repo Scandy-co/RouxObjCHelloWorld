@@ -40,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		835205F5204F42950032AC0E /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = ScandyCoreLicense/ScandyCoreLicense.txt; sourceTree = "<group>"; };
-		835206BD2050855D0032AC0E /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "../scandy-core/build-ios/internal_only/ios/Debug-iphoneos/ScandyCore.framework"; sourceTree = "<group>"; };
+		835206BD2050855D0032AC0E /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "./ScandyCoreIOSExample/Frameworks/ScandyCore.framework"; sourceTree = "<group>"; };
 		83986FFB20409ED3007F6660 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		83C2BE46203F370D00A5D1F0 /* ScandyCoreIOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScandyCoreIOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83C2BE49203F370D00A5D1F0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };

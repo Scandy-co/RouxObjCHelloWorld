@@ -71,3 +71,4 @@ iOSInjectionProject/
 ScandyCore.framework
 ScandyCoreIOS.framework
 **/ScandyCoreIOS.framework
+*.framework
