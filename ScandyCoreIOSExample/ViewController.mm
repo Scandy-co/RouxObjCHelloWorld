@@ -194,6 +194,9 @@
   // clear out memory from previous session and reload the view
   [ScandyCoreManager reset];
 
+  // Make sure we put our license back in after reseting
+  [self setLicense];
+
   // reload the view and connect it to ScandyCore after reset
   [self loadScanView];
   
