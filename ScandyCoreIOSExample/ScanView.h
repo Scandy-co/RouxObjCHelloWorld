@@ -14,7 +14,7 @@
 #import <GLKit/GLKit.h>
 
 @interface ScanView : ScandyCoreView
-
+- (void)setRendererBackgroundColor:(double*) color1 :(double*) color2 :(bool) enableGradient;
 @end
 
 #endif /* ScanView_h */
