@@ -5,7 +5,9 @@ Contact us to get a license to use ScandyCore. Then put the license string (with
 In your application read the contents of the file into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
 
 ## Including ScandyCore in Your Project
-It's as simple as adding your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
+Please extract the ScandyCore.framework.zip file and move the ScandyCore.framework file into the ScandyCoreiOSExample/Frameworks directory. 
+
+The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
 
 All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
