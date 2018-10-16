@@ -175,7 +175,7 @@
 
 
 - (void)requestCamera {
-  if ( [ScandyCoreManager.scandyCameraDelegate hasPermission ]  )
+  if ( [ScandyCoreManager.scandyCameraDelegate hasPermission]  )
   {
     NSLog(@"user has granted permission to camera!");
   } else {

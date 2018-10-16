@@ -20,7 +20,7 @@ All basic functionality can be acheived by just importing the main header from t
 // your code
 ...
 // must include "IScandyCore.h" to use scandyCorePtr
-ScandyCoreManager.scandyCorePtr->startScanning();
+ScandyCoreManager.scandyCorePtr->isRunning();
 ...
 ```
 
@@ -34,24 +34,19 @@ ScandyCoreManager.scandyCorePtr->setLicense(licenseCString);
 ```
 
 ## Order is important
-Setting up the TrueDepth camera and ScandyCore must happen in a certain order. 
-
 Before we set up the scanner we must be sure we have access to the TrueDepth camera.
 
 ```
-// Tell ScandyCoreCameraDelegate we want TrueDepth
-[ScandyCoreManager.scandyCameraDelegate setDeviceTypes:@[AVCaptureDeviceTypeBuiltInTrueDepthCamera]];
-
-// Request for the camera to start
-[ScandyCoreManager.scandyCameraDelegate startCamera:AVCaptureDevicePositionFront]
+// Make sure we have permission, or atleast request it
+[ScandyCoreManager.scandyCameraDelegate hasPermission];
 ```
 
-`startCamera` will ask the user to grant permission to the camera and return `AVCamSetupResultSuccess` if permission was indeed granted and `AVCamSetupResultCameraNotAuthorized` if denied. It is also possible to receive `AVCamSetupResultSessionConfigurationFailed` if the `AVCaptureDeviceInput` was not successfully created.
+`[ScandyCoreManager.scandyCameraDelegate hasPermission]` returns `false` if the user has denied camera permission. It returns `true` when the user has given permission or the permission dialog is being presented. We suggest you request camera permissions in a user friendly way that makes the user aware of what's going on.
 
-Once the TrueDepth camera is started the next step is to call:
+Once we have camera permissions then we can initialize the scanner:
 
 ```
-ScandyCoreManager.scandyCorePtr->initializeScanner(scandy::core::ScannerType::TRUE_DEPTH);
+[ScandyCoreManager initializeScanner:scandy::core::ScannerType::TRUE_DEPTH];
 ```
 
 After the scanner is initialized, we can either start the preview or configure the scanning parameters like scan size, scan offset, etc. The order of these two actions is not important except that they must happen after `initializeScanner`.
@@ -59,28 +54,27 @@ After the scanner is initialized, we can either start the preview or configure t
 From there we are ready to start the scanning process.
 
 ```
-ScandyCoreManager.scandyCorePtr->startScanning();
+[ScandyCoreManager startPreview];
+/* Allow user to adjust scan size, noise, offset, whatever.... */
+[ScandyCoreManager startScanning];
 ```
 
-**NOTE: Scan configurations must be finalized before calling `startScanning()` beacuse they cannot be changed during scanning.**  
+**NOTE: Scan configurations must be finalized before calling `startScanning` beacuse they cannot be changed during scanning.**  
 
 ## Visualization
 ### ScandyCoreView
-It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions to VTK interactions through `VTKGestureHandler` when viewing and interacting with a mesh.
-
-One thing you need to do when using this view is call its `render` function, which will tell the internal visualizer to render the current viewport (scanning or mesh). Our suggestion is to use an NSTimer in your GLKViewController to call `render` at your desired frame rate.
-
-The only other setup that needs to be done is attach the `VTKGestureHandler` to the view.
+It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions for interacting with a mesh.
 
 ```
 // Connect our ScanView with this ViewController
 ScandyCoreView *scan_view = (ScandyCoreView *)self.view;
 scan_view.context = self.context;
 scan_view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
-  
-// Tell vtk to handle touch events
-self.vtkGestureHandler = [[VTKGestureHandler alloc] initWithView:self.view vtkView:scan_view];
+
+// Have ScandyCoreView create our visualizer
+[scan_view createVisualizer];
 ```
+
 ### Custom Views
 If you want to create your own view, you can create and manage the internal vtk visualizer yourself through the `ScandyCore` pointer. 
 
