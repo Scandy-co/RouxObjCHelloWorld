@@ -7,7 +7,7 @@
 //
 
 #include <scandy/core/IScandyCore.h>
-#include <scandy/core/getStatusString.h>
+#include <scandy/core/IScandyCoreConfiguration.h>
 
 #import <ScandyCore/ScandyCore.h>
 
@@ -16,6 +16,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <GLKit/GLKit.h>
 
+
+// Easily switch between scan modes for demoing
+#define SCAN_MODE_V2 1
 
 @interface ViewController () <ScandyCoreManagerDelegate>
 @end
@@ -55,7 +58,8 @@
 }
 // NOTE: only used in scan mode v2, which is currently experimental
 - (void) onVolumeMemoryDidUpdate:(const float) percent_full {
-  NSLog(@"ScandyCoreViewController::onVolumeMemoryDidUpdate %f", percent_full);
+  // NOTE: this is a very active callback, so don't log it as it will slow everything to a crawl
+  //NSLog(@"ScandyCoreViewController::onVolumeMemoryDidUpdate %f", percent_full);
 }
 // Network client connected callback
 - (void)onClientConnected:(NSString *)host {
@@ -75,11 +79,17 @@
   
   // normalize the scan size based on default slider value range [0, 1]
   float scan_size = (range * self.scanSizeSlider.value) + minSize;
-  
-  self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
-  
+
+#if SCAN_MODE_V2
+  // For scan mode v2, the resolution should be
+  scan_size *= 0.004; // Scale the 0.0 - 1.0 value to be a max of 4mm
+  scan_size = std::max(scan_size, 0.0005f);
+  ScandyCoreManager.scandyCorePtr->setVoxelSize(scan_size);
+#else
   // update the scan size to a cube of scan_size x scan_size x scan_size
   ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
+#endif
+  self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
 }
 
 
@@ -160,13 +170,6 @@
   // update the scan slider to match for the sake of this example
   self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.02f m", scan_size];
   self.scanSizeSlider.value = (scan_size - minSize)/(maxSize - minSize);
-
-  // Set the orientation to up upright and mirrored (EXIFOrienation::SIX). This is the default orientation
-  // that's set for the TrueDepth sensor in initializeScanner because it's easiest to use when scanning with
-  // the front-facing sensor while looking at the screen. You can change it to one of the other seven orientations
-  // here. For example, if you want to cast the screen while scanning, using EXIFOrientation::SEVEN would allow a
-  // more natural view for when the sensor is facing away from you.
-  ScandyCoreManager.scandyCorePtr->setDepthCameraEXIFOrientation(scandy::utilities::EXIFOrientation::SIX);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -265,6 +268,15 @@
       // Make sure we have camera permissions
       [self requestCamera];
 
+      auto config = ScandyCoreManager.scandyCorePtr->getIScandyCoreConfiguration();
+
+#if SCAN_MODE_V2
+      // In Scandy Pro this is called scan mode v2. It sets the scan into a resolution mode, into scan size
+      config->m_use_unbounded = true;
+#else
+      config->m_use_unbounded = false;
+#endif
+
       auto scannerType = scandy::core::ScannerType::TRUE_DEPTH;
       auto status = [ScandyCoreManager initializeScanner:scannerType];
       if (status != scandy::core::Status::SUCCESS) {
@@ -272,7 +284,7 @@
         NSLog(@"failed to initialize scanner with reason: %@", reason);
       }
 
-      // NOTE: it's important to call this after scandyCorePtr->initializeScanner() because
+      // NOTE: it's important to call this after [ScandyCoreManager initializeScanner] because
       // we need the scanner to have been initialized so that the configuration changes will persist
       [self setupScanConfiguration];
 
