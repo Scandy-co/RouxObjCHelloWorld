@@ -78,17 +78,4 @@ scan_view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
 ```
 
 ### Custom Views
-If you want to create your own view, you can create and manage the internal vtk visualizer yourself through the `ScandyCore` pointer. 
-
-```
-// Creating the visualizer with initial width and height.  
-ScandyCoreManager.scandyCorePtr->createVisualizer(width, height);
-```
-
-Inside the `drawInRect` function of your GLKView you need to tell the internal visualizer to render.
-
-```
-ScandyCoreManager.scandyCorePtr->getVisualizer()->render();
-```
-
-**NOTE: Custom views are not fully supported in this release, so please use ScandyCoreView for best results.**
+If you want to create your own view, checkout the [ScandyCoreSceneKitExample](https://github.com/Scandy-co/ScandyCoreSceneKitExample/blob/master/README.md#custom-views)
