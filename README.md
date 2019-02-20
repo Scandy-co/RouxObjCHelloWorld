@@ -1,6 +1,6 @@
 # Using ScandyCore.framework for iOS (iPhone X TrueDepth)
 ## ScandyCore License
-Contact us to get a license to use ScandyCore. Then put the license string (without quotation marks) into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
+Contact us to get a license to use ScandyCore. Then put the license string into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
 
 In your application read the contents of the file into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
 
