@@ -9,6 +9,8 @@ Please extract the ScandyCore.framework.zip file and move the ScandyCore.framewo
 
 The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
 
+## PLEASE NOTE - DO NOT BUILD FOR A SIMULATOR - SCANDY CORE IS ONLY PACKAGED TO BE RUN ON DEVICE
+
 All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
 ```
