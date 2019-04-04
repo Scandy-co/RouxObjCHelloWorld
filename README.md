@@ -1,6 +1,24 @@
 # Using ScandyCore.framework for iOS (iPhone X TrueDepth)
 ## ScandyCore License
-Contact us to get a license to use ScandyCore. Then put the license string (without quotation marks) into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
+Contact us to get a license to use ScandyCore. Then put the license string into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
+
+example text for license:
+
+
+```
+  {
+  "vendor": "Scandy LLC",
+  "license": {
+    "product": "Scandy Core",
+    "version": "1.0",
+    "expiry": "YYYY-MM-DD",
+    "hostid": "any",
+    "customer": "This Could Be You",
+    "signature": "some random string - but not really random"
+  }
+}
+```
+
 
 In your application read the contents of the file into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
 
@@ -8,6 +26,8 @@ In your application read the contents of the file into a string. Use the pointer
 Please extract the ScandyCore.framework.zip file and move the ScandyCore.framework file into the ScandyCoreiOSExample/Frameworks directory. 
 
 The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
+
+## PLEASE NOTE - DO NOT BUILD FOR A SIMULATOR - SCANDY CORE IS ONLY PACKAGED TO BE RUN ON DEVICE
 
 All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
