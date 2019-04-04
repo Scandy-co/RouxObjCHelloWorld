@@ -49,9 +49,34 @@
 }
 - (void) onScannerStop:(scandy::core::Status) status {
   NSLog(@"onScannerStop");
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if( status == scandy::core::Status::SUCCESS) {
+      // Generate mesh and display it in the view
+      [ScandyCoreManager generateMesh];
+    }
+  });
 }
 - (void) onGenerateMesh:(scandy::core::Status) status {
   NSLog(@"onGenerateMesh");
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if( status == scandy::core::Status::SUCCESS) {
+      // Change the background to a slight gradient
+      double color1[3] = {0.1,0.1,0.1};
+      double color2[3] = {0.2,0.2,0.23};
+      [(ScanView*)self.view setRendererBackgroundColor:color1 :color2 :true];
+
+      [(ScanView*)self.view resizeView];
+
+      bool should_uninitialize = false;
+      if( should_uninitialize ){
+        // Nullify the internal scanning configurations and pipeline. This
+        // isn't completely necessary if you'll be creating another scan right
+        // after, but should be called when moving on to another portion of the
+        // application.
+        [ScandyCoreManager uninitializeScanner];
+      }
+    }
+  });
 }
 - (void) onSaveMesh:(scandy::core::Status) status {
   NSLog(@"onSaveMesh");
@@ -318,24 +343,6 @@
   if( ScandyCoreManager.scandyCorePtr->isRunning()){
     dispatch_async(dispatch_get_main_queue(), ^{
       [ScandyCoreManager stopScanning];
-
-      // Generate mesh and display it in the view
-      [ScandyCoreManager generateMesh];
-      // Change the background to a slight gradient
-      double color1[3] = {0.1,0.1,0.1};
-      double color2[3] = {0.2,0.2,0.23};
-      [(ScanView*)self.view setRendererBackgroundColor:color1 :color2 :true];
-
-      [(ScanView*)self.view resizeView];
-
-      bool should_uninitialize = false;
-      if( should_uninitialize ){
-        // Nullify the internal scanning configurations and pipeline. This
-        // isn't completely necessary if you'll be creating another scan right
-        // after, but should be called when moving on to another portion of the
-        // application.
-        [ScandyCoreManager uninitializeScanner];
-      }
     });
   }
   
