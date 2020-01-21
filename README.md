@@ -1,6 +1,10 @@
 # Using ScandyCore.framework for iOS (iPhone X TrueDepth)
-## ScandyCore License
-Contact us to get a license to use ScandyCore. Then put the license string into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
+
+## Prerequisites
+
+#### Get License
+Contact us to get a license to use ScandyCore. 
+Save the license string into a UTF-8 encoded file named `ScandyCoreLicense.txt`. In your project, go to `Build Phases` -> `Copy Bundle Resources`, and add `ScandyCoreLicense.txt` to the list. 
 
 example text for license:
 
@@ -22,14 +26,22 @@ example text for license:
 
 In your application read the contents of the file into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
 
+#### Device 
+
+You can only run ScandyCore on a device (iPhone X or above), you *cannot* use a Simulator. 
+
 ## Including ScandyCore in Your Project
-Please extract the ScandyCore.framework.zip file and move the ScandyCore.framework file into the ScandyCoreiOSExample/Frameworks directory. 
+- Extract the ScandyCore.framework.zip file and move the ScandyCore.framework file under your project's `Frameworks` directory. 
 
-The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
+- The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. Set the search type to "recursive". 
 
-## PLEASE NOTE - DO NOT BUILD FOR A SIMULATOR - SCANDY CORE IS ONLY PACKAGED TO BE RUN ON DEVICE
+- Next, under `General` -> `Frameworks, Libraries, and Embedded Content`, add `ScandyCore.framework`. Under `Embed`, select `Embed & Sign`. The framework should appear under `Build Phases` -> `Embed Frameworks`. 
 
-All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
+- Under `Build Settings`, set `Enable Bitcode` to `No`. 
+
+- Under `Build Settings` -> `Architectures` -> `Valid Architectures`, make sure `arm64` is listed. 
+
+- All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
 ```
 // MyViewController.h
