@@ -1,34 +1,43 @@
-# Using ScandyCore.framework for iOS (iPhone X TrueDepth)
-## ScandyCore License
-Contact us to get a license to use ScandyCore. Then put the license string into file named ScandyCoreLicense.txt, and save it with UTF-8 encoding. In your project go to `Build Phases` -> `Copy Bundle Resources`, and add ScandyCoreLicense.txt to the list. 
+# Roux IOS
 
-example text for license:
+## Running Sample Project
+### 1. Roux License
+To run this example, you will need to generate a license through the [Roux Portal](http://roux.scandy.co). If you have not already, sign up as a developer to gain access to the developer dashboard. Create a new project and click the 'Download License' button.
 
+Rename the license to `ScandyCoreLicense.txt` and move into `ScandyCoreLicense/`.
 
-```
-  {
-  "vendor": "Scandy LLC",
-  "license": {
-    "product": "Scandy Core",
-    "version": "1.0",
-    "expiry": "YYYY-MM-DD",
-    "hostid": "any",
-    "customer": "This Could Be You",
-    "signature": "some random string - but not really random"
-  }
-}
-```
+Open `ScandyCoreIOSExample.xcodeproj` in Xcode.
 
+Select the `ScandyCoreIOSExample` target and add `ScandyCoreLicense.txt` to `Build Phases` -> `Copy Bundle Resources`.
 
-In your application read the contents of the file into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
+### 2. Scandy Core Framework
+If you haven't already, download the SDK (button can be found in the top navigation bar of the Roux Portal). Extract the `ScandyCore.zip` file and move `ScandyCore.framework` into  `ScandyCoreiOSExample/Frameworks/`.
 
-## Including ScandyCore in Your Project
-Please extract the ScandyCore.framework.zip file and move the ScandyCore.framework file into the ScandyCoreiOSExample/Frameworks directory. 
-
-The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
+Connect a device and build in Xcode.
 
 ## PLEASE NOTE - DO NOT BUILD FOR A SIMULATOR - SCANDY CORE IS ONLY PACKAGED TO BE RUN ON DEVICE
 
+## Using Roux in your own project
+To include Roux in your iOS project, there are a few extra steps you need to take.
+
+### 1. Roux License
+In your application read the contents of the `ScandyCoreLicense.txt` into a string. Use the pointer to the ScandyCore object to call `setLicense`, passing the license string as an argument. If the return from this call is `SUCCESS`, everything is good; otherwise, you will receive the status `INVALID_LICENSE`, and you will not be able to use ScandyCore's functionality until you provide a valid license.
+#### Sample Code
+```
+  // Get license to use ScandyCore
+  NSString *licensePath = [[NSBundle mainBundle] pathForResource:@"ScandyCoreLicense" ofType:@"txt"];
+  NSString *licenseString = [NSString stringWithContentsOfFile:licensePath encoding:NSUTF8StringEncoding error:NULL];
+
+  // convert license to cString
+  const char* licenseCString = [licenseString cStringUsingEncoding:NSUTF8StringEncoding];
+
+  // Get access to use ScandyCore
+  ScandyCoreManager.scandyCorePtr->setLicense(licenseCString);
+```
+### 2. Scandy Core Framework
+The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths` in Xcode. 
+
+### 3. Importing Scandy Core
 All basic functionality can be acheived by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
 ```
