@@ -9,9 +9,7 @@
 #ifndef ScanView_h
 #define ScanView_h
 
-#import <ScandyCore/ScandyCore.h>
-
-#import <GLKit/GLKit.h>
+#import <ScandyCore/ScandyCoreView.h>
 
 @interface ScanView : ScandyCoreView
 - (void)setRendererBackgroundColor:(double*) color1 :(double*) color2 :(bool) enableGradient;

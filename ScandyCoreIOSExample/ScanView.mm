@@ -8,10 +8,12 @@
 
 #include <scandy/core/IScandyCore.h>
 
-#include "ScanView.h"
+#import "ScanView.h"
 
+#import <GLKit/GLKit.h>
 #import <Foundation/Foundation.h>
 #import <ScandyCore/ScandyCore.h>
+#import <ScandyCore/ScandyCoreManager.h>
 
 @implementation ScanView
 
@@ -20,8 +22,8 @@
 :(double*) color2
 :(bool) enableGradient
 {
-  if( ScandyCoreManager.scandyCorePtr->getVisualizer() != nullptr && !ScandyCoreManager.scandyCorePtr->getVisualizer()->m_viewports.empty() ){
-    for( auto viewport : ScandyCoreManager.scandyCorePtr->getVisualizer()->m_viewports ){
+  if( ScandyCoreManager.scandyCorePtr->getVisualizer() != nullptr ){
+    for( auto viewport : ScandyCoreManager.scandyCorePtr->getVisualizer()->getViewports() ){
       viewport->renderer()->SetGradientBackground(enableGradient);
       if( color1 != nullptr ){
         viewport->renderer()->SetBackground(color1);
