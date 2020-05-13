@@ -8,14 +8,17 @@
 
 #include <scandy/core/IScandyCore.h>
 #include <scandy/core/IScandyCoreConfiguration.h>
+// includes first since Objective-C defines NO and other weird stuff
 
 #import <ScandyCore/ScandyCore.h>
-
-#import "ViewController.h"
+#import <ScandyCore/ScandyCoreManager.h>
 
 #import <AVFoundation/AVFoundation.h>
 #import <GLKit/GLKit.h>
 
+
+#include "ViewController.h"
+#include "ScanView.h"
 
 // Easily switch between scan modes for demoing
 #define SCAN_MODE_V2 1
@@ -65,15 +68,13 @@
       double color2[3] = {0.2,0.2,0.23};
       [(ScanView*)self.view setRendererBackgroundColor:color1 :color2 :true];
 
-      [(ScanView*)self.view resizeView];
-
       bool should_uninitialize = false;
       if( should_uninitialize ){
         // Nullify the internal scanning configurations and pipeline. This
         // isn't completely necessary if you'll be creating another scan right
         // after, but should be called when moving on to another portion of the
         // application.
-        [ScandyCoreManager uninitializeScanner];
+        [ScandyCore uninitializeScanner];
       }
     }
   });
@@ -117,42 +118,13 @@
   self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
 }
 
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:(BOOL)animated];
-  
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [(ScanView*)self.view resizeView];
-  });
-}
-
-- (void)setLicense {
-  // Get license to use ScandyCore
-  NSString *licensePath = [[NSBundle mainBundle] pathForResource:@"ScandyCoreLicense" ofType:@"txt"];
-  NSString *licenseString = [NSString stringWithContentsOfFile:licensePath encoding:NSUTF8StringEncoding error:NULL];
-
-  // convert license to cString
-  const char* licenseCString = [licenseString cStringUsingEncoding:NSUTF8StringEncoding];
-
-  // Get access to use ScandyCore
-  ScandyCoreManager.scandyCorePtr->setLicense(licenseCString);
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  [self setLicense];
+  [ScandyCore setLicense];
 
   // Make ourselves into a ScandyCoreManagerDelegate
   [ScandyCoreManager setScandyCoreDelegate:self];
-
-  self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
-  
-  if (!self.context) {
-    NSLog(@"Failed to create ES context");
-  }
-
-  [EAGLContext setCurrentContext:self.context];
   
   [self loadScanView];
   
@@ -164,7 +136,6 @@
 - (void)loadScanView{
   // Connect our ScanView with this ViewController
   ScanView *view = (ScanView *)self.view;
-  view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
 
   // Have ScandyCoreView create our visualizer
@@ -223,7 +194,7 @@
   [ScandyCoreManager reset];
 
   // Make sure we put our license back in after reseting
-  [self setLicense];
+  [ScandyCore setLicense];
 
   // reload the view and connect it to ScandyCore after reset
   [self loadScanView];
