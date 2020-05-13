@@ -7,9 +7,6 @@
 //
 
 
-
-#import "ScanView.h"
-
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
@@ -26,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *stopScanButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveMeshButton;
-
-@property (strong, nonatomic) EAGLContext *context;
 
 - (void)stopScanning;
 
