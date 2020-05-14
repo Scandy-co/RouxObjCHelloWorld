@@ -1,1 +1,1 @@
-## Put ScandyCoreLicense.txt in here
+## Put RouxLicense.txt in here
