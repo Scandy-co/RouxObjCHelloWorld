@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		835205F6204F42950032AC0E /* ScandyCoreLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835205F5204F42950032AC0E /* ScandyCoreLicense.txt */; };
 		83986FFC20409ED3007F6660 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83986FFB20409ED3007F6660 /* Metal.framework */; };
 		83C2BE4B203F370D00A5D1F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4A203F370D00A5D1F0 /* AppDelegate.m */; };
 		83C2BE4E203F370D00A5D1F0 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C2BE4D203F370D00A5D1F0 /* ViewController.mm */; };
@@ -22,6 +21,7 @@
 		83C2BEA6203F77DC00A5D1F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C2BEA5203F77DC00A5D1F0 /* CoreGraphics.framework */; };
 		E2C9A81A246DB871002962D9 /* ScandyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9A819246DB871002962D9 /* ScandyCore.framework */; };
 		E2C9A81B246DB871002962D9 /* ScandyCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9A819246DB871002962D9 /* ScandyCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E2C9A81E246DBA0E002962D9 /* RouxLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2C9A81D246DBA0E002962D9 /* RouxLicense.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,7 +39,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		835205F5204F42950032AC0E /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = ScandyCoreLicense/ScandyCoreLicense.txt; sourceTree = "<group>"; };
 		835206BD2050855D0032AC0E /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = ./ScandyCoreIOSExample/Frameworks/ScandyCore.framework; sourceTree = "<group>"; };
 		83986FFB20409ED3007F6660 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		83C2BE46203F370D00A5D1F0 /* RouxObjCHelloWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RouxObjCHelloWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +58,7 @@
 		83C2BEA3203F77CD00A5D1F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		83C2BEA5203F77DC00A5D1F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E2C9A819246DB871002962D9 /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = RouxObjCHelloWorld/Frameworks/ScandyCore.framework; sourceTree = "<group>"; };
+		E2C9A81D246DBA0E002962D9 /* RouxLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = RouxLicense.txt; path = RouxLicense/RouxLicense.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 		83C2BE3D203F370D00A5D1F0 = {
 			isa = PBXGroup;
 			children = (
-				835205F5204F42950032AC0E /* ScandyCoreLicense.txt */,
+				E2C9A81D246DBA0E002962D9 /* RouxLicense.txt */,
 				83C2BE48203F370D00A5D1F0 /* RouxObjCHelloWorld */,
 				83C2BE47203F370D00A5D1F0 /* Products */,
 				83C2BE5F203F39C500A5D1F0 /* Frameworks */,
@@ -187,7 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				835205F6204F42950032AC0E /* ScandyCoreLicense.txt in Resources */,
+				E2C9A81E246DBA0E002962D9 /* RouxLicense.txt in Resources */,
 				83C2BE56203F370D00A5D1F0 /* LaunchScreen.storyboard in Resources */,
 				83C2BE53203F370D00A5D1F0 /* Assets.xcassets in Resources */,
 				83C2BE51203F370D00A5D1F0 /* Main.storyboard in Resources */,
