@@ -110,7 +110,8 @@
   // For scan mode v2, the resolution should be
   scan_size *= 0.004; // Scale the 0.0 - 1.0 value to be a max of 4mm
   scan_size = std::max(scan_size, 0.0005f);
-  ScandyCoreManager.scandyCorePtr->setVoxelSize(scan_size);
+  [ScandyCore setVoxelSize:scan_size];
+//  ScandyCoreManager.scandyCorePtr->setVoxelSize(scan_size);
 #else
   // update the scan size to a cube of scan_size x scan_size x scan_size
   ScandyCoreManager.scandyCorePtr->setScanSize(scan_size);
