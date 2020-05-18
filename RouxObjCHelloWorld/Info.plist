@@ -21,7 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>ScandyCoreIOSExample uses your TrueDepth camera to capture 3D scans</string>
+	<string>RouxObjCHelloWorld uses your TrueDepth camera to capture 3D scans</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

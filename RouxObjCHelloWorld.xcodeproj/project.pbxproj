@@ -16,7 +16,7 @@
 		A5AEB4D5246C452C00E1F681 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AEB4D4246C452C00E1F681 /* GLKit.framework */; };
 		E2BAD02C2472D5690040BF86 /* ScandyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BAD02B2472D5690040BF86 /* ScandyCore.framework */; };
 		E2BAD02D2472D5690040BF86 /* ScandyCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2BAD02B2472D5690040BF86 /* ScandyCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E2C9A81E246DBA0E002962D9 /* ScandyCoreLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2C9A81D246DBA0E002962D9 /* ScandyCoreLicense.txt */; };
+		E2BAD0342472E6870040BF86 /* ScandyCoreLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2BAD0332472E6870040BF86 /* ScandyCoreLicense.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,8 +45,8 @@
 		83C2BE57203F370D00A5D1F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83C2BE58203F370D00A5D1F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5AEB4D4246C452C00E1F681 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		E2BAD02B2472D5690040BF86 /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = ScandyCoreIOSExample/Frameworks/ScandyCore.framework; sourceTree = "<group>"; };
-		E2C9A81D246DBA0E002962D9 /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = ScandyCoreLicense/ScandyCoreLicense.txt; sourceTree = "<group>"; };
+		E2BAD02B2472D5690040BF86 /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "../scandy-core/build-ios/install/ScandyCore.framework"; sourceTree = "<group>"; };
+		E2BAD0332472E6870040BF86 /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = RouxObjCHelloWorld/ScandyCoreLicense.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +65,7 @@
 		83C2BE3D203F370D00A5D1F0 = {
 			isa = PBXGroup;
 			children = (
-				E2C9A81D246DBA0E002962D9 /* ScandyCoreLicense.txt */,
+				E2BAD0332472E6870040BF86 /* ScandyCoreLicense.txt */,
 				83C2BE48203F370D00A5D1F0 /* RouxObjCHelloWorld */,
 				83C2BE47203F370D00A5D1F0 /* Products */,
 				83C2BE5F203F39C500A5D1F0 /* Frameworks */,
@@ -99,7 +99,6 @@
 		83C2BE5F203F39C500A5D1F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E2BAD0282472D3D40040BF86 /* ScandyCore.framework */,
 				E2BAD02B2472D5690040BF86 /* ScandyCore.framework */,
 				A5AEB4D4246C452C00E1F681 /* GLKit.framework */,
 			);
@@ -123,7 +122,7 @@
 			dependencies = (
 			);
 			name = RouxObjCHelloWorld;
-			productName = ScandyCoreIOSExample;
+			productName = RouxObjCHelloWorld;
 			productReference = 83C2BE46203F370D00A5D1F0 /* RouxObjCHelloWorld.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -165,7 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2C9A81E246DBA0E002962D9 /* ScandyCoreLicense.txt in Resources */,
+				E2BAD0342472E6870040BF86 /* ScandyCoreLicense.txt in Resources */,
 				83C2BE56203F370D00A5D1F0 /* LaunchScreen.storyboard in Resources */,
 				83C2BE53203F370D00A5D1F0 /* Assets.xcassets in Resources */,
 				83C2BE51203F370D00A5D1F0 /* Main.storyboard in Resources */,
@@ -321,7 +320,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RouxObjCHelloWorld/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"ENABLE_METAL=1",
@@ -330,7 +329,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RouxObjCHelloWorld/Frameworks/ScandyCore.framework/include/",
+					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/include/",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/RouxObjCHelloWorld/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
@@ -356,7 +355,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RouxObjCHelloWorld/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"ENABLE_METAL=1",
@@ -364,7 +363,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RouxObjCHelloWorld/Frameworks/ScandyCore.framework/include/",
+					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/include/",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/RouxObjCHelloWorld/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
