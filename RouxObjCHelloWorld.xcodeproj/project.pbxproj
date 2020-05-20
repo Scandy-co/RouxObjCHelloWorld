@@ -329,7 +329,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/include/",
+					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/Headers/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/RouxObjCHelloWorld/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
@@ -363,7 +363,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/include/",
+					"$(PROJECT_DIR)/Frameworks/ScandyCore.framework/Headers/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/RouxObjCHelloWorld/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
