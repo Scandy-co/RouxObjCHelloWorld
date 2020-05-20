@@ -1,13 +1,12 @@
 //
 //  ViewController.h
-//  ScandyCoreIOSExample
+//  RouxObjCHelloWorld
 //
 //  Created by Evan Laughlin on 2/22/18.
 //  Copyright © 2018 Scandy. All rights reserved.
 //
 
-
-#import <UIKit/UIKit.h>
+#import <ScandyCore/ScandyCore.h>
 #import <GLKit/GLKit.h>
 
 @interface ViewController : GLKViewController
@@ -23,8 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *stopScanButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveMeshButton;
-
-- (void)stopScanning;
+@property (weak, nonatomic) IBOutlet UISwitch *v2ModeSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *v2ModeLabel;
 
 @end
 
