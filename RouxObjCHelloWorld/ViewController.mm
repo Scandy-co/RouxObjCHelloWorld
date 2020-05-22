@@ -32,28 +32,7 @@ bool SCAN_MODE_V2 = true;
     [self turnOnScanner];
 }
 - (IBAction)scanSizeChanged:(id)sender {
-    if (SCAN_MODE_V2)
-    {// For scan mode v2, the resolution should be
-        float minRes = 0.0005; // == 0.5 mm
-        float maxRes = 0.006; // == 4 mm
-        float range = maxRes - minRes;
-        // normalize the scan size based on default slider value range [0, 1]
-        //Make sure we are passing a double to setVoxelSize
-        double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
-        [ScandyCore setVoxelSize:voxelRes];
-        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f m", voxelRes*1000];
-    }
-    else{
-        // the minimum size of scan volume's dimensions in meters
-        double minSize = 0.2;
-        // the maximum size of scan volume's dimensions in meters
-        double maxSize = 5.0;
-        double range = maxSize - minSize;
-        //Make sure we are passing a Double to setScanSize
-        double scan_size = (range * double(self.scanSizeSlider.value)) + minSize;
-        [ScandyCore setScanSize:scan_size];
-        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
-    }
+    [self setResolution];
 }
 
 - (IBAction)v2ModeToggled:(id)sender {
@@ -98,8 +77,28 @@ bool SCAN_MODE_V2 = true;
         [ScandyCore toggleV2Scanning:SCAN_MODE_V2];
         [ScandyCore initializeScanner];
         [ScandyCore startPreview];
-        double resolution = .001; // == 1.0mm
-        [ScandyCore setVoxelSize:resolution];
+        [self setResolution];
+    }
+}
+
+- (void)setResolution{
+    if (SCAN_MODE_V2){
+        float minRes = 0.0005; // == 0.5 mm
+        float maxRes = 0.006; // == 4 mm
+        float range = maxRes - minRes;
+        double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
+         [ScandyCore setVoxelSize:voxelRes];
+         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f m", voxelRes*1000];
+    } else {
+        // the minimum size of scan volume's dimensions in meters
+        double minSize = 0.2;
+        // the maximum size of scan volume's dimensions in meters
+        double maxSize = 5.0;
+        double range = maxSize - minSize;
+        //Make sure we are passing a Double to setScanSize
+        double scan_size = (range * double(self.scanSizeSlider.value)) + minSize;
+        [ScandyCore setScanSize:scan_size];
+        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
     }
 }
 
