@@ -19,10 +19,10 @@
 // minimum scan size should be at least 0.2 meters for bare minimum surface scans because
 // the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
 
-// the minimum size of scan volume's dimensions in meters
+// the minimum size of scan volume's dimensions in millimeters
 double minSize = 0.2;
 
-// the maximum size of scan volume's dimensions in meters
+// the maximum size of scan volume's dimensions in millimeters
 double maxSize = 5;
 
 - (IBAction)startScanningPressed:(id)sender {
@@ -50,7 +50,6 @@ double maxSize = 5;
         scan_size = std::max(float(scan_size), 0.0005f);
         [ScandyCore setVoxelSize:scan_size];}
     else{
-        // update the scan size to a cube of scan_size x scan_size x scan_size
         NSLog(@"scan size: %@", [NSString stringWithFormat:@"%f", scan_size]);
         [ScandyCore setScanSize:scan_size];
     }
@@ -99,9 +98,9 @@ double maxSize = 5;
         auto scannerType = scandy::core::ScannerType::TRUE_DEPTH;
         [ScandyCore initializeScanner:scannerType];
         [ScandyCore startPreview];
-        // Set the voxel size to 2.0m
-        double m = 2.0;
-        [ScandyCore setVoxelSize:(m*1e-3)];
+        // Set the voxel size to 1.0m
+        double mm = 1.0;
+        [ScandyCore setVoxelSize:(mm*1e-3)];
     }
 }
 
