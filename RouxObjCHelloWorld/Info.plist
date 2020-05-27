@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>RouxObjCHelloWorld uses your TrueDepth camera to capture 3D scans</string>
+    <key>UISupportsDocumentBrowser</key>
+    <true/>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

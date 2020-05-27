@@ -14,16 +14,10 @@
 
 @implementation ViewController
 
- bool SCAN_MODE_V2 = true;
+bool SCAN_MODE_V2 = true;
 // NOTE: if using the default bounding box offset of 0 meters from the sensor, then the
 // minimum scan size should be at least 0.2 meters for bare minimum surface scans because
 // the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
-
-// the minimum size of scan volume's dimensions in meters
-double minSize = 0.2;
-
-// the maximum size of scan volume's dimensions in meters
-double maxSize = 5;
 
 - (IBAction)startScanningPressed:(id)sender {
     [self startScanning];
@@ -38,24 +32,9 @@ double maxSize = 5;
     [self turnOnScanner];
 }
 - (IBAction)scanSizeChanged:(id)sender {
-    double range = maxSize - minSize;
-    
-    // normalize the scan size based on default slider value range [0, 1]
-    double scan_size = (range * self.scanSizeSlider.value) + minSize;
-    NSLog(@"scan size: %@", [NSString stringWithFormat:@"%f", scan_size]);
-    
-    if (SCAN_MODE_V2)
-    {// For scan mode v2, the resolution should be
-        scan_size *= 0.004; // Scale the 0.0 - 1.0 value to be a max of 4mm
-        scan_size = std::max(float(scan_size), 0.0005f);
-        [ScandyCore setVoxelSize:scan_size];}
-    else{
-        // update the scan size to a cube of scan_size x scan_size x scan_size
-        NSLog(@"scan size: %@", [NSString stringWithFormat:@"%f", scan_size]);
-        [ScandyCore setScanSize:scan_size];
-    }
-    self.scanSizeLabel.text = [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
+    [self setResolution];
 }
+
 - (IBAction)v2ModeToggled:(id)sender {
     SCAN_MODE_V2 = self.v2ModeSwitch.isOn;
     //Need to uninitialize & reinitialize
@@ -96,12 +75,30 @@ double maxSize = 5;
     [self renderPreviewScreen];
     if([self requestCamera]){
         [ScandyCore toggleV2Scanning:SCAN_MODE_V2];
-        auto scannerType = scandy::core::ScannerType::TRUE_DEPTH;
-        [ScandyCore initializeScanner:scannerType];
+        [ScandyCore initializeScanner];
         [ScandyCore startPreview];
-        // Set the voxel size to 2.0m
-        double m = 2.0;
-        [ScandyCore setVoxelSize:(m*1e-3)];
+        [self setResolution];
+    }
+}
+
+- (void)setResolution{
+    if (SCAN_MODE_V2){
+        float minRes = 0.0005; // == 0.5 mm
+        float maxRes = 0.006; // == 4 mm
+        float range = maxRes - minRes;
+        double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
+         [ScandyCore setVoxelSize:voxelRes];
+         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f m", voxelRes*1000];
+    } else {
+        // the minimum size of scan volume's dimensions in meters
+        double minSize = 0.2;
+        // the maximum size of scan volume's dimensions in meters
+        double maxSize = 5.0;
+        double range = maxSize - minSize;
+        //Make sure we are passing a Double to setScanSize
+        double scan_size = (range * double(self.scanSizeSlider.value)) + minSize;
+        [ScandyCore setScanSize:scan_size];
+        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
     }
 }
 
