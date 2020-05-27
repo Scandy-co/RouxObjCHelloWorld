@@ -6,12 +6,12 @@ To run this example, you will need to generate a license through the [Roux Porta
 
 Rename the license to `ScandyCoreLicense.txt` and move into `ScandyCoreLicense/`.
 
-Open `ScandyCoreIOSExample.xcodeproj` in Xcode.
+Open `RouxObjCHelloWorld.xcodeproj` in Xcode.
 
-Select the `ScandyCoreIOSExample` target and add `ScandyCoreLicense.txt` to `Build Phases` -> `Copy Bundle Resources`.
+Select the `RouxObjCHelloWorld` target and add `ScandyCoreLicense.txt` to `Build Phases` -> `Copy Bundle Resources`.
 
 ### 2. Scandy Core Framework
-If you haven't already, download the SDK (button can be found in the top navigation bar of the Roux Portal). Extract the `ScandyCore.zip` file and move `ScandyCore.framework` into  `ScandyCoreiOSExample/Frameworks/`.
+If you haven't already, download the SDK (button can be found in the top navigation bar of the Roux Portal). Extract the `ScandyCore.zip` file and move `ScandyCore.framework` into  `RouxObjCHelloWorld/Frameworks/`.
 
 Connect a device and build in Xcode.
 

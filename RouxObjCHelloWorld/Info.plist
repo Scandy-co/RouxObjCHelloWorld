@@ -20,6 +20,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>RouxObjCHelloWorld uses your TrueDepth camera to capture 3D scans</string>
+    <key>UISupportsDocumentBrowser</key>
+    <true/>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -43,7 +47,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>ScandyCoreIOSExample uses your TrueDepth camera to capture 3D scans</string>
 </dict>
 </plist>
