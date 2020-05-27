@@ -45,7 +45,7 @@
 		83C2BE57203F370D00A5D1F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83C2BE58203F370D00A5D1F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5AEB4D4246C452C00E1F681 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		E2BAD02B2472D5690040BF86 /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "../scandy-core/build-ios/install/ScandyCore.framework"; sourceTree = "<group>"; };
+		E2BAD02B2472D5690040BF86 /* ScandyCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScandyCore.framework; path = "Frameworks/ScandyCore.framework"; sourceTree = "<group>"; };
 		E2BAD0332472E6870040BF86 /* ScandyCoreLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ScandyCoreLicense.txt; path = RouxObjCHelloWorld/ScandyCoreLicense.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
