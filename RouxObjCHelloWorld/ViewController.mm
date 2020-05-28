@@ -84,11 +84,11 @@ bool SCAN_MODE_V2 = true;
 - (void)setResolution{
     if (SCAN_MODE_V2){
         float minRes = 0.0005; // == 0.5 mm
-        float maxRes = 0.006; // == 4 mm
+        float maxRes = 0.006; // == 6 mm
         float range = maxRes - minRes;
         double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
          [ScandyCore setVoxelSize:voxelRes];
-         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f m", voxelRes*1000];
+         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f mm", voxelRes*1000];
     } else {
         // the minimum size of scan volume's dimensions in meters
         double minSize = 0.2;
