@@ -33,7 +33,6 @@ Before you can use Roux, you must call `setLicense` to validate your license.
 
 `setLicense` searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
 
-#### Sample Code
 ```
 // ViewController.mm
 // example file
@@ -45,7 +44,9 @@ Before you can use Roux, you must call `setLicense` to validate your license.
 
 ```
 ### 2. Scandy Core Framework
-The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths` in Xcode. You will also need to add `GLKit.framework` and `ScandyCore.framework` in `Frameworks, Libraries, and Embedded Content`.
+The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths` in Xcode. 
+
+You will also need to add `GLKit.framework` and `ScandyCore.framework` in `Frameworks, Libraries, and Embedded Content`.
 
 
 ### 3. Importing Scandy Core
