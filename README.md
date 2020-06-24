@@ -1,4 +1,4 @@
-# Roux IOS
+# RouxObjCHelloWorld
 
 ## Tutorial Blog Posts
 For more in-depth tutorials for downloading and setting up Roux in your projects, visit 
@@ -28,29 +28,9 @@ Connect a device and build in Xcode.
 ## Using Roux in your own project
 To include Roux in your iOS project, there are a few extra steps you need to take.
 
-### 1. Roux License
-Before you can use Roux, you must call `setLicense` to validate your license.
 
-`setLicense` searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
-
-```
-// ViewController.mm
-// example file
-
-- (void)viewDidLoad { 
-  [super viewDidLoad]; 
-  [ScandyCore setLicense]; 
-}
-
-```
-### 2. Scandy Core Framework
-The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths` in Xcode. 
-
-You will also need to add `GLKit.framework` and `ScandyCore.framework` in `Frameworks, Libraries, and Embedded Content`.
-
-
-### 3. Importing Scandy Core
-All basic functionality can be achieved by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
+### 1. Importing Scandy Core
+All basic functionality can be achieved by just importing the main header from the framework for access into the `ScandyCore` object.
 
 ```
 // ViewController.h
@@ -66,6 +46,63 @@ All basic functionality can be achieved by just importing the main header from t
 ...
 
 ```
+
+#### ScandyCoreView
+It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions for interacting with a mesh.
+
+Open `main.storyboard`, expand the View Controller Scene and View Controller, and select 'View'. In the right hand Inspector Area, open the Identity inspector and select ScandyCoreView from the dropdown list labeled 'Class'.
+
+Change `ViewController.m` to `ViewController.mm`. Roux is written in C++ which can only be used in .mm files 
+
+Delete `SceneDelegate.m` and `SceneDelegate.h`
+
+Right-click `info.plist`, and select Open As -> Source Code. Remove the following lines:
+
+```
+<key>UIApplicationSceneManifest</key> 	
+<dict> 		
+  <key>UIApplicationSupportsMultipleScenes</key> 		
+  <false/> 		
+  <key>UISceneConfigurations</key> 		
+  <dict> 			
+    <key>UIWindowSceneSessionRoleApplication</key> 			
+    <array> 				
+      <dict> 					
+        <key>UISceneConfigurationName</key> 					
+        <string>Default Configuration</string>
+        <key>UISceneDelegateClassName</key> 					
+        <string>SceneDelegate</string>
+        <key>UISceneStoryboardFile</key> 					
+        <string>Main</string> 				
+      </dict> 			
+    </array> 		
+  </dict> 	
+</dict>
+
+```
+In `AppDelegate.h`, add `@property (strong, nonatomic) UIWindow *window;` after `@interface…`
+ 
+In `AppDelegate.m`, remove the two functions after `#pragma mark - UISceneSession lifecycle`
+
+### 2. Roux License
+Before you can use Roux, you must call `setLicense` to validate your license.
+
+`setLicense` searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
+
+```
+// ViewController.mm
+// example file
+
+- (void)viewDidLoad { 
+  [super viewDidLoad]; 
+  [ScandyCore setLicense]; 
+}
+
+```
+### 3. Scandy Core Framework
+The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths` in Xcode. 
+
+You will also need to add `GLKit.framework` and `ScandyCore.framework` in `Frameworks, Libraries, and Embedded Content`.
 
 ## Order is important
 ### User Permissions
@@ -100,74 +137,15 @@ From there we are ready to start the scanning process.
 // ViewController.mm
 // example file
 
-- (void)turnOnScanner {
-    //checks camera permissions
-    if([ScandyCore hasCameraPermission]){ 
-        //Turn on v2 scanning
-        [ScandyCore toggleV2Scanning:true];
-        // initializes scanner
-        [ScandyCore initializeScanner]; 
-        [ScandyCore startPreview];
+if([ScandyCore hasCameraPermission]){ 
+    //Turn on v2 scanning
+    [ScandyCore toggleV2Scanning:true];
+    // initializes scanner
+    [ScandyCore initializeScanner]; 
+    [ScandyCore startPreview];
 
-	      // set voxel size
-        double resolution = .001; // == 1.0mm
-        [ScandyCore setVoxelSize:resolution];
-    }
-}
-
-```
-Then call the function right after you call `setLicense`
-```
-// ViewController.mm
-// example file
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [ScandyCore setLicense];
-    
-    [self turnOnScanner];
+	  // set voxel size
+    double resolution = .001; // == 1.0mm
+    [ScandyCore setVoxelSize:resolution];
 }
 ```
-
-
-## Visualization
-### ScandyCoreView
-It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions for interacting with a mesh.
-
-Open `main.storyboard`, expand the View Controller Scene and View Controller, and select 'View'. In the right hand Inspector Area, open the Identity inspector and select ScandyCoreView from the dropdown list labeled 'Class'.
-
-Change `ViewController.m` to `ViewController.mm`. Roux is written in C++ which can only be used in .mm files 
-
-Delete `SceneDelegate.m` and `SceneDelegate.h`
-
-Right-click `info.plist`, and select Open As -> Source Code. Remove the following lines:
-
-
-```
-<key>UIApplicationSceneManifest</key> 	
-<dict> 		
-  <key>UIApplicationSupportsMultipleScenes</key> 		
-  <false/> 		
-  <key>UISceneConfigurations</key> 		
-  <dict> 			
-    <key>UIWindowSceneSessionRoleApplication</key> 			
-    <array> 				
-      <dict> 					
-        <key>UISceneConfigurationName</key> 					
-        <string>Default Configuration</string> 					<key>UISceneDelegateClassName</key> 					
-        <string>SceneDelegate</string> 					
-        <key>UISceneStoryboardFile</key> 					
-        <string>Main</string> 				
-      </dict> 			
-    </array> 		
-  </dict> 	
-</dict>
-
-```
-In `AppDelegate.h`, add `@property (strong, nonatomic) UIWindow *window;` after `@interface…`
- 
-In `AppDelegate.m`, remove the two functions after `#pragma mark - UISceneSession lifecycle`
-
-### Custom Views
-If you want to create your own view, checkout the [ScandyCoreSceneKitExample](https://github.com/Scandy-co/ScandyCoreSceneKitExample/blob/master/README.md#custom-views)
