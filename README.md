@@ -35,8 +35,9 @@ setLicense() searches in your bundle resources for a file named ScandyCoreLicens
 
 #### Sample Code
 ```
-// MyViewController.mm
+// ViewController.mm
 // example file
+
 - (void)viewDidLoad { 
   [super viewDidLoad]; 
   [ScandyCore setLicense]; 
@@ -51,7 +52,7 @@ The example app already has the `ScandyCore.framework` in `Framework Search Path
 All basic functionality can be achieved by just importing the main header from the framework and including the interface header for access into the `ScandyCore` object.
 
 ```
-// MyViewController.h
+// ViewController.h
 // example file
 
 #import <ScandyCore/ScandyCore.h>
@@ -76,6 +77,9 @@ From there we are ready to start the scanning process.
 
 
 ```
+// ViewController.mm
+// example file
+
 - (void)turnOnScanner {
     //checks camera permissions
     if([ScandyCore hasCameraPermission]){ 
@@ -91,6 +95,19 @@ From there we are ready to start the scanning process.
     }
 }
 
+```
+Then call the function right after you call setLicense()
+```
+// ViewController.mm
+// example file
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [ScandyCore setLicense];
+    
+    [self turnOnScanner];
+}
 ```
 
 
