@@ -29,9 +29,9 @@ Connect a device and build in Xcode.
 To include Roux in your iOS project, there are a few extra steps you need to take.
 
 ### 1. Roux License
-Before you can use Roux, you must call setLicense to validate your license.
+Before you can use Roux, you must call `setLicense` to validate your license.
 
-setLicense() searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
+`setLicense` searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
 
 #### Sample Code
 ```
@@ -67,9 +67,28 @@ All basic functionality can be achieved by just importing the main header from t
 ```
 
 ## Order is important
-Before we set up the scanner we must be sure we have access to the TrueDepth camera. We suggest you request camera permissions in a user friendly way that makes the user aware of what's going on.
+### User Permissions
+You need to include information in the `Info.plist` explaining how your app will be using your users’ data. We suggest you request permissions in a user friendly way that makes the user aware of what's going on.
 
-Once we have camera permissions then we can initialize the scanner.
+Before we set up the scanner we must be sure we have access to the `TrueDepth camera`. Since Roux can be used to create volumetric video, you also need to include the `NSMicrophoneUsageDescription` key.
+
+Right-click `Info.plist` in the Project Navigator and select Open As -> Source Code. At the end, after the `</array>` tag and before the closing `</dict>` tag, insert the following:
+
+```
+// Info.plist
+// example file
+
+<key>NSCameraUsageDescription</key> 
+<string>My app uses the TrueDepth camera to capture 3D scans</string> 
+
+<key>NSMicrophoneUsageDescription</key> 
+<string>My app uses the microphone to record volumetric video</string>
+```
+If you do not plan on using the microphone or volumetric video, change the <string> description to say "My app does not use the microphone".
+ 
+Once we have camera permissions, we can initialize the scanner.
+
+### Initializing Scanner
 
 After the scanner is initialized, we can either start the preview or configure the scanning parameters like scan size, scan offset, etc. The order of these two actions is not important except that they must happen after initializeScanner.
 
@@ -96,7 +115,7 @@ From there we are ready to start the scanning process.
 }
 
 ```
-Then call the function right after you call setLicense()
+Then call the function right after you call `setLicense`
 ```
 // ViewController.mm
 // example file
