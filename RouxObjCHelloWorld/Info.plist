@@ -23,7 +23,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>RouxObjCHelloWorld uses your TrueDepth camera to capture 3D scans</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>RouxObjCHelloWorld uses your microphone to when recording volumetric video</string>
+    <string>RouxObjCHelloWorld uses your microphone when recording volumetric video</string>
     <key>UISupportsDocumentBrowser</key>
     <true/>
 	<key>UIFileSharingEnabled</key>
