@@ -44,6 +44,8 @@ bool SCAN_MODE_V2 = true;
     [ScandyCore initializeScanner:scannerType];
     [ScandyCore startPreview];
 }
+- (IBAction)connectToMirrorDevicePressed:(id)sender {
+}
 
 
 - (void)viewDidLoad {
@@ -76,7 +78,8 @@ bool SCAN_MODE_V2 = true;
     if([self requestCamera]){
         [ScandyCore toggleV2Scanning:SCAN_MODE_V2];
         [ScandyCore initializeScanner];
-        [ScandyCore startPreview];
+        [ScandyCore setSendRenderedStream:true];
+        [ScandyCore setReceiveNetworkCommands:true];
         [self setResolution];
     }
 }
@@ -157,6 +160,7 @@ bool SCAN_MODE_V2 = true;
     [self.v2ModeSwitch setHidden:false];
     [self.v2ModeLabel setHidden:false];
     [self.startScanButton setHidden:false];
+    [self.connectToMirrorDeviceButton setHidden:false];
     
     [self.stopScanButton setHidden:true];
     [self.startPreviewButton setHidden:true];
@@ -167,6 +171,7 @@ bool SCAN_MODE_V2 = true;
 -(void) renderScanningScreen{
     [self.stopScanButton setHidden:false];
     
+    [self.connectToMirrorDeviceButton setHidden:true];
     [self.scanSizeLabel setHidden:true];
     [self.scanSizeSlider setHidden:true];
     [self.v2ModeSwitch setHidden:true];
@@ -180,8 +185,8 @@ bool SCAN_MODE_V2 = true;
     [self.startPreviewButton setHidden:false];
     [self.saveMeshButton setHidden:false];
     
+    [self.connectToMirrorDeviceButton setHidden:true];
     [self.stopScanButton setHidden:true];
-    
     [self.scanSizeLabel setHidden:true];
     [self.scanSizeSlider setHidden:true];
     [self.v2ModeSwitch setHidden:true];

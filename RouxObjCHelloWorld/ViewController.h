@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *saveMeshButton;
 @property (weak, nonatomic) IBOutlet UISwitch *v2ModeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *v2ModeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *connectToMirrorDeviceButton;
 
 @end
 
