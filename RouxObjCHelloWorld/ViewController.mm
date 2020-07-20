@@ -1,7 +1,7 @@
 //
 //  ViewController.m
 //  RouxObjCHelloWorld
-//
+// Network demo - Scanning Device
 //  Created by Evan Laughlin on 2/22/18.
 //  Copyright © 2018 Scandy. All rights reserved.
 //
@@ -13,7 +13,6 @@
 @end
 
 @implementation ViewController
-
 bool SCAN_MODE_V2 = true;
 // NOTE: if using the default bounding box offset of 0 meters from the sensor, then the
 // minimum scan size should be at least 0.2 meters for bare minimum surface scans because
@@ -45,6 +44,19 @@ bool SCAN_MODE_V2 = true;
     [ScandyCore startPreview];
 }
 - (IBAction)connectToMirrorDevicePressed:(id)sender {
+    NSArray* discovered_hosts = [ScandyCore getDiscoveredHosts];
+    if([discovered_hosts containsObject:self.IPAddressInput.text]){
+        self.connectedNetworkLabel.text = [[NSString alloc] initWithFormat:@"%s %@","Connected to:",self.IPAddressInput.text];
+        [self renderPreviewScreen];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[NSString alloc] initWithFormat:@"No host found at %@", self.IPAddressInput.text]
+                                                        message:@"Please enter the IP address of your mirror device."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 
@@ -74,7 +86,7 @@ bool SCAN_MODE_V2 = true;
 }
 
 - (void)turnOnScanner {
-    [self renderPreviewScreen];
+    [self renderConnectToDeviceScreen];
     if([self requestCamera]){
         [ScandyCore toggleV2Scanning:SCAN_MODE_V2];
         [ScandyCore initializeScanner];
@@ -153,6 +165,21 @@ bool SCAN_MODE_V2 = true;
     [alert show];
 }
 
+-(void) renderConnectToDeviceScreen{
+    [self.IPAddressInput setHidden:false];
+    [self.IPAddressLabel setHidden:false];
+    [self.connectToMirrorDeviceButton setHidden:false];
+    
+    [self.scanSizeLabel setHidden:true];
+    [self.scanSizeSlider setHidden:true];
+    [self.v2ModeSwitch setHidden:true];
+    [self.v2ModeLabel setHidden:true];
+    [self.startScanButton setHidden:true];
+    [self.stopScanButton setHidden:true];
+    [self.startPreviewButton setHidden:true];
+    [self.saveMeshButton setHidden:true];
+    
+}
 
 -(void) renderPreviewScreen{
     [self.scanSizeLabel setHidden:false];
@@ -165,6 +192,9 @@ bool SCAN_MODE_V2 = true;
     [self.stopScanButton setHidden:true];
     [self.startPreviewButton setHidden:true];
     [self.saveMeshButton setHidden:true];
+    [self.IPAddressInput setHidden:true];
+    [self.IPAddressLabel setHidden:true];
+    [self.connectToMirrorDeviceButton setHidden:true];
     
 }
 
@@ -179,6 +209,9 @@ bool SCAN_MODE_V2 = true;
     [self.startScanButton setHidden:true];
     [self.startPreviewButton setHidden:true];
     [self.saveMeshButton setHidden:true];
+    [self.IPAddressInput setHidden:true];
+    [self.IPAddressLabel setHidden:true];
+    [self.connectToMirrorDeviceButton setHidden:true];
 }
 
 -(void) renderMeshScreen{
@@ -192,6 +225,9 @@ bool SCAN_MODE_V2 = true;
     [self.v2ModeSwitch setHidden:true];
     [self.v2ModeLabel setHidden:true];
     [self.startScanButton setHidden:true];
+    [self.IPAddressInput setHidden:true];
+    [self.IPAddressLabel setHidden:true];
+    [self.connectToMirrorDeviceButton setHidden:true];
 }
 
 

@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UISwitch *v2ModeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *v2ModeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *connectToMirrorDeviceButton;
+@property (weak, nonatomic) IBOutlet UITextField *IPAddressInput;
+@property (weak, nonatomic) IBOutlet UILabel *IPAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *connectedNetworkLabel;
 
 @end
 
