@@ -59,6 +59,16 @@
                                     <action selector="changeHostButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I0u-0v-Ft8"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNw-K6-Xvy">
+                                <rect key="frame" x="120" y="736" width="135" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Restart Scanner"/>
+                                <connections>
+                                    <action selector="changeHostButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kIR-kV-8QD"/>
+                                    <action selector="restartScannerButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YGs-cV-V88"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="o0s-SV-BYf"/>
@@ -69,6 +79,7 @@
                         <outlet property="changeHostButton" destination="wyt-Fh-xIy" id="PTa-6P-ACH"/>
                         <outlet property="connectToMirrorDeviceButton" destination="qri-RS-l4x" id="doc-Po-0sD"/>
                         <outlet property="connectedNetworkLabel" destination="cGQ-7K-wyV" id="j51-Bo-aXe"/>
+                        <outlet property="restartScannerButton" destination="gNw-K6-Xvy" id="Gl1-RJ-Ofj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

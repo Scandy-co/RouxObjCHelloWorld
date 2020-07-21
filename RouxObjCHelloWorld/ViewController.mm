@@ -36,6 +36,9 @@
 - (IBAction)changeHostButtonPressed:(id)sender {
     [self renderConnectToDeviceScreen];
 }
+- (IBAction)restartScannerButtonPressed:(id)sender {
+    [self turnOnScanner];
+}
 
 
 - (void)viewDidLoad {
@@ -78,11 +81,15 @@
     [self.connectToMirrorDeviceButton setHidden:false];
     
     [self.changeHostButton setHidden:true];
+    [self.restartScannerButton setHidden:true];
+
     
 }
 
 -(void) renderPreviewScreen{
     [self.changeHostButton setHidden:false];
+    [self.restartScannerButton setHidden:false];
+
 
     [self.IPAddressInput setHidden:true];
     [self.IPAddressLabel setHidden:true];

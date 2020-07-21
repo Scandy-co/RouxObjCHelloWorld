@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *IPAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *connectedNetworkLabel;
 @property (weak, nonatomic) IBOutlet UIButton *changeHostButton;
+@property (weak, nonatomic) IBOutlet UIButton *restartScannerButton;
 
 @end
 
