@@ -16,66 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vcC-Dx-yYa">
-                                <rect key="frame" x="30" y="618" width="315" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="scanSizeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="9rr-FB-3fg"/>
-                                </connections>
-                            </slider>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xx-O3-354">
-                                <rect key="frame" x="101" y="465" width="173" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.85755128079999998" green="0.85755128079999998" blue="0.85755128079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Save Mesh">
-                                    <color key="titleColor" red="0.035738641109999997" green="0.85743199479999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveMeshPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iL8-YT-KSk"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ag6-EN-dnE">
-                                <rect key="frame" x="101" y="526" width="173" height="55"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.80677604970000005" green="0.80677604970000005" blue="0.80677604970000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Start Preview"/>
-                                <connections>
-                                    <action selector="startPreviewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D73-E2-W7v"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan Size: 2.00 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZN-xm-Erz">
-                                <rect key="frame" x="106" y="596" width="162" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.1043915102" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0s-wj-5lC">
-                                <rect key="frame" x="95" y="408" width="184" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.85755128079999998" green="0.85755128079999998" blue="0.85755128079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Stop Scanning"/>
-                                <connections>
-                                    <action selector="stopScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6a6-Kb-HgS"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6nU-SK-9AK">
-                                <rect key="frame" x="95" y="409" width="184" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.80677604970000005" green="0.80677604970000005" blue="0.80677604970000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Start Scanning"/>
-                                <connections>
-                                    <action selector="startScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3wB-hf-OM3"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enable unbounded" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2J-nU-so7">
-                                <rect key="frame" x="250" y="73" width="144" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qri-RS-l4x">
                                 <rect key="frame" x="88" y="312" width="198" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -110,13 +50,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ucH-No-ism">
-                                <rect key="frame" x="299" y="102" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="v2ModeToggled:" destination="BYZ-38-t0r" eventType="valueChanged" id="SOJ-k7-B4D"/>
-                                </connections>
-                            </switch>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="o0s-SV-BYf"/>
@@ -126,14 +59,6 @@
                         <outlet property="IPAddressLabel" destination="nko-Or-NwR" id="d8a-sz-EIB"/>
                         <outlet property="connectToMirrorDeviceButton" destination="qri-RS-l4x" id="doc-Po-0sD"/>
                         <outlet property="connectedNetworkLabel" destination="cGQ-7K-wyV" id="j51-Bo-aXe"/>
-                        <outlet property="saveMeshButton" destination="0Xx-O3-354" id="yaL-Jb-q64"/>
-                        <outlet property="scanSizeLabel" destination="QZN-xm-Erz" id="5vV-yG-NrR"/>
-                        <outlet property="scanSizeSlider" destination="vcC-Dx-yYa" id="xaW-AR-nkO"/>
-                        <outlet property="startPreviewButton" destination="ag6-EN-dnE" id="OBd-Kv-6Tu"/>
-                        <outlet property="startScanButton" destination="6nU-SK-9AK" id="75F-cl-Pbv"/>
-                        <outlet property="stopScanButton" destination="x0s-wj-5lC" id="AIy-4q-KQe"/>
-                        <outlet property="v2ModeLabel" destination="j2J-nU-so7" id="DR1-Ro-wFf"/>
-                        <outlet property="v2ModeSwitch" destination="ucH-No-ism" id="pNm-fG-Hjm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
