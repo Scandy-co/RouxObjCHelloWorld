@@ -17,6 +17,7 @@
 - (IBAction)connectToMirrorDevicePressed:(id)sender {
     [self.view endEditing:YES];
     NSArray* discovered_hosts = [ScandyCore getDiscoveredHosts];
+    NSLog(@"Discovered hosts: %@",discovered_hosts);
     if([discovered_hosts containsObject:self.IPAddressInput.text]){
         [ScandyCore connectToCommandHost:self.IPAddressInput.text];
         [ScandyCore setServerHost:self.IPAddressInput.text];
@@ -32,12 +33,17 @@
         [alert show];
     }
 }
+- (IBAction)changeHostButtonPressed:(id)sender {
+    [self renderConnectToDeviceScreen];
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [ScandyCore setLicense];
+    [ScandyCore setSendRenderedStream:true];
+    [ScandyCore setReceiveNetworkCommands:true];
+    [ScandyCore initializeScanner];
     [self renderConnectToDeviceScreen];
 }
 
@@ -61,9 +67,7 @@
 - (void)turnOnScanner {
     [self renderPreviewScreen];
     if([self requestCamera]){
-        [ScandyCore initializeScanner];
-        [ScandyCore setSendRenderedStream:true];
-        [ScandyCore setReceiveNetworkCommands:true];
+        [ScandyCore startPreview];
     }
 }
 
@@ -73,19 +77,13 @@
     [self.IPAddressLabel setHidden:false];
     [self.connectToMirrorDeviceButton setHidden:false];
     
-}
-
--(void) renderPreviewScreen{
-    [self.connectToMirrorDeviceButton setHidden:false];
- 
-    [self.IPAddressInput setHidden:true];
-    [self.IPAddressLabel setHidden:true];
-    [self.connectToMirrorDeviceButton setHidden:true];
+    [self.changeHostButton setHidden:true];
     
 }
 
--(void) renderScanningScreen{
-    [self.connectToMirrorDeviceButton setHidden:true];
+-(void) renderPreviewScreen{
+    [self.changeHostButton setHidden:false];
+
     [self.IPAddressInput setHidden:true];
     [self.IPAddressLabel setHidden:true];
     [self.connectToMirrorDeviceButton setHidden:true];

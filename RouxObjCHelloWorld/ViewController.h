@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *IPAddressInput;
 @property (weak, nonatomic) IBOutlet UILabel *IPAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *connectedNetworkLabel;
+@property (weak, nonatomic) IBOutlet UIButton *changeHostButton;
 
 @end
 

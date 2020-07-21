@@ -50,6 +50,15 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyt-Fh-xIy">
+                                <rect key="frame" x="117" y="682" width="135" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Change Host"/>
+                                <connections>
+                                    <action selector="changeHostButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I0u-0v-Ft8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="o0s-SV-BYf"/>
@@ -57,6 +66,7 @@
                     <connections>
                         <outlet property="IPAddressInput" destination="O5A-bP-2pw" id="cpz-Af-4Eb"/>
                         <outlet property="IPAddressLabel" destination="nko-Or-NwR" id="d8a-sz-EIB"/>
+                        <outlet property="changeHostButton" destination="wyt-Fh-xIy" id="PTa-6P-ACH"/>
                         <outlet property="connectToMirrorDeviceButton" destination="qri-RS-l4x" id="doc-Po-0sD"/>
                         <outlet property="connectedNetworkLabel" destination="cGQ-7K-wyV" id="j51-Bo-aXe"/>
                     </connections>
