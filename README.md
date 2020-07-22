@@ -1,151 +1,98 @@
-# RouxObjCHelloWorld
+# Networking via SDK
 
-## Tutorial Blog Posts
-For more in-depth tutorials for downloading and setting up Roux in your projects, visit 
+This feature allows two devices to be connected. One device captures the scan while the other device renders the preview.
 
-[Getting Started with Roux, Part 1: How to Set Up the Example iOS App](https://www.scandy.co/blog/getting-started-with-roux-part-one)
+## Terminology
 
-[Getting Started with Roux, Part 2: How to Build a Roux iOS Project from Scratch](https://www.notion.so/Getting-Started-with-Roux-Part-2-How-to-Build-a-Roux-iOS-Project-from-Scratch-e04de262ed704957adf53b2b2be4bf70)
+**Scanning Device**: The device which does the scanning.
+- runs SLAM & reconstruction pipeline
+- sends the scan preview screen
+- receives scan commands
 
+**Mirror Device**: The device which renders scan preview and controls the scan process.
+- receives scan view
+- sends scan commands (start, stop, set scan size, etc.)
 
-## Running Sample Project
-### 1. Roux License
-To run this example, you will need to generate a license through the [Roux Portal](http://roux.scandy.co). If you have not already, sign up as a developer to gain access to the developer dashboard. Create a new project and click the 'Download License' button.
-
-Rename the license to `ScandyCoreLicense.txt` and move into `RouxObjCHelloWorld/`.
-
-Open `RouxObjCHelloWorld.xcodeproj` in Xcode.
-
-Select the `RouxObjCHelloWorld` target and add `ScandyCoreLicense.txt` to `Build Phases` -> `Copy Bundle Resources`.
-
-### 2. Scandy Core Framework
-If you haven't already, download the SDK (button can be found in the top navigation bar of the Roux Portal). Extract the `ScandyCore.zip` file and move `ScandyCore.framework` into  `RouxObjCHelloWorld/Frameworks/`.
-
-Connect a device and build in Xcode.
-
-## PLEASE NOTE - DO NOT BUILD FOR A SIMULATOR - SCANDY CORE IS ONLY PACKAGED TO BE RUN ON DEVICE
-
-## Using Roux in your own project
-To include Roux in your iOS project, there are a few extra steps you need to take.
+## Setting Up Mirror Device
 
 
-### 1. Importing Scandy Core
-All basic functionality can be achieved by just importing the main header from the framework for access into the `ScandyCore` object.
+1. Receive scan view
+The main purpose a mirror device is to receive the scan screen from the scanning device, so we must also configure that.
 
 ```
-// ViewController.h
-// example file
-
-#import <ScandyCore/ScandyCore.h>
-#import <GLKit/GLKit.h>
-
-@interface ViewController : GLKViewController
-
-...
-// your code
-...
-
+[ScandyCore setReceiveRenderedStream:true];
 ```
 
-#### ScandyCoreView
-It is ideal to simply use or subclass the GLKView `ScandyCoreView` with your own GLKViewController. The `ScandyCoreView` creates and manages the scanning view as well as the mesh view. It includes a `resizeView` function that automatically scales the viewports to fit the frame the view is contained within. `ScandyCoreView` is also configured to translate iOS touch interactions for interacting with a mesh.
-
-Open `main.storyboard`, expand the View Controller Scene and View Controller, and select 'View'. In the right hand Inspector Area, open the Identity inspector and select ScandyCoreView from the dropdown list labeled 'Class'.
-
-Change `ViewController.m` to `ViewController.mm`. Roux is written in C++ which can only be used in .mm files 
-
-Delete `SceneDelegate.m` and `SceneDelegate.h`
-
-Right-click `info.plist`, and select Open As -> Source Code. Remove the following lines:
+2. Send scan commands
+ When we configure the mirror device to send network commands, calls to the following functions will be sent to the scanning device: `startScanning`, `stopScanning`, `generateMesh`, `setScanSize`, `setVoxelSize`, and `setNoiseFilter`. Again we have to explicitly tell the mirror device to send these.
 
 ```
-<key>UIApplicationSceneManifest</key> 	
-<dict> 		
-  <key>UIApplicationSupportsMultipleScenes</key> 		
-  <false/> 		
-  <key>UISceneConfigurations</key> 		
-  <dict> 			
-    <key>UIWindowSceneSessionRoleApplication</key> 			
-    <array> 				
-      <dict> 					
-        <key>UISceneConfigurationName</key> 					
-        <string>Default Configuration</string>
-        <key>UISceneDelegateClassName</key> 					
-        <string>SceneDelegate</string>
-        <key>UISceneStoryboardFile</key> 					
-        <string>Main</string> 				
-      </dict> 			
-    </array> 		
-  </dict> 	
-</dict>
-
+[ScandyCore setSendNetworkCommands:true];
 ```
-In `AppDelegate.h`, add `@property (strong, nonatomic) UIWindow *window;` after `@interface…`
- 
-In `AppDelegate.m`, remove the two functions after `#pragma mark - UISceneSession lifecycle`
 
-### 2. Roux License
-Before you can use Roux, you must call `setLicense` to validate your license.
+_NOTE:_ `startPreview` does not get sent over the network because the preview must be started on the mirror device.
 
-`setLicense` searches in your bundle resources for a file named ScandyCoreLicense.txt and then reads the contents to check its expiration and if the signature is valid.
-
-```
-// ViewController.mm
-// example file
-
-- (void)viewDidLoad { 
-  [super viewDidLoad]; 
-  [ScandyCore setLicense]; 
-}
-
-```
-### 3. Scandy Core Framework
-The example app already has the `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths`. In your own project, please add your path to `ScandyCore.framework` in `Framework Search Paths` and `ScandyCore.framework/Headers/include` in `Header Search Paths` in Xcode. 
-
-You will also need to add `GLKit.framework` and `ScandyCore.framework` in `Frameworks, Libraries, and Embedded Content`.
-
-## Order is important
-### User Permissions
-You need to include information in the `Info.plist` explaining how your app will be using your users’ data. We suggest you request permissions in a user friendly way that makes the user aware of what's going on.
-
-Before we set up the scanner we must be sure we have access to the `TrueDepth camera`. Since Roux can be used to create volumetric video, you also need to include the `NSMicrophoneUsageDescription` key.
-
-Right-click `Info.plist` in the Project Navigator and select Open As -> Source Code. At the end, after the `</array>` tag and before the closing `</dict>` tag, insert the following:
-
-```
-// Info.plist
-// example file
-
-<key>NSCameraUsageDescription</key> 
-<string>My app uses the TrueDepth camera to capture 3D scans</string> 
-
-<key>NSMicrophoneUsageDescription</key> 
-<string>My app uses the microphone to record volumetric video</string>
-```
-If you do not plan on using the microphone or volumetric video, change the <string> description to say "My app does not use the microphone".
- 
-Once we have camera permissions, we can initialize the scanner.
-
-### Initializing Scanner
-
-After the scanner is initialized, we can either start the preview or configure the scanning parameters like scan size, scan offset, etc. The order of these two actions is not important except that they must happen after initializeScanner.
-
-From there we are ready to start the scanning process.
+3. Initialize
+This device needs to initialize the Roux backend but must set the scanner type to `ScandyCoreScannerType::NETWORK` to tell it not to use data generated from the scanning device.
 
 
 ```
-// ViewController.mm
-// example file
+[ScandyCore initializeScanner:ScandyCoreScannerType::NETWORK];
+```
 
-if([ScandyCore hasCameraPermission]){ 
-    //Turn on v2 scanning
-    [ScandyCore toggleV2Scanning:true];
-    // initializes scanner
-    [ScandyCore initializeScanner]; 
-    [ScandyCore startPreview];
+## Setting Up the Scanning Device
 
-	  // set voxel size
-    double resolution = .001; // == 1.0mm
-    [ScandyCore setVoxelSize:resolution];
-}
+1. Send scan preview
+We have to tell the device to send the rendered scan preview...
+
+
+```
+[ScandyCore setSendRenderedStream:true];
+```
+
+2. Receive scan commands
+ ... and to receive scan commands.
+Swift:
+
+```
+[ScandyCore setReceiveNetworkCommands:true];
+```
+
+3. Initialize
+The scanning device can be initialized as you normally would.
+
+
+```
+[ScandyCore initializeScanner];
+```
+
+## Connecting the Devices
+
+First, both devices must be on the same wifi network.
+
+From the mirror device we need to get the IP address so we know which IP to look for the scanning device in. On mirror device call:
+
+```
+[ScandyCore getIPAddress];
+```
+
+
+On the scanner device search through the discovered host IP addresses. The IP address of the mirror device should be in this list.
+
+```
+NSArray* discovered_hosts = [ScandyCore getDiscoveredHosts];
+```
+
+Then connect the scanner device to the mirror device (where `mirror_ip` is the `NSString` IP address of mirror device).
+
+
+```
+[ScandyCore connectToCommandHost:mirror_ip];
+```
+
+
+We can then use that same IP address to tell the scanning device to send the rendered scan preview to the mirror device.
+
+```
+[ScandyCore setServerHost:mirror_ip];
 ```
