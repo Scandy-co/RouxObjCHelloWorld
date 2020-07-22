@@ -2,14 +2,16 @@
 //  ViewController.h
 //  RouxObjCHelloWorld
 //
-//  Created by Evan Laughlin on 2/22/18.
-//  Copyright © 2018 Scandy. All rights reserved.
+//  Created by April Polubiec on 7/20/20.
+//  Copyright © 2020 Scandy. All rights reserved.
 //
 
 #import <ScandyCore/ScandyCore.h>
 #import <GLKit/GLKit.h>
 
 @interface ViewController : GLKViewController
+@property (weak, nonatomic) IBOutlet UILabel *IPAddressLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *selectDeviceType;
 
 //Scanning Device UI
 @property (weak, nonatomic) IBOutlet UIView *scanningDeviceView;

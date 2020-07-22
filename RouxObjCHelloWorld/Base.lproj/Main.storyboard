@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xam-yl-TJC">
-                                <rect key="frame" x="0.0" y="56" width="414" height="784"/>
+                                <rect key="frame" x="0.0" y="112" width="414" height="728"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tj-oR-lXJ" userLabel="Start Scan Button">
@@ -25,18 +25,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Start Scanning"/>
+                                        <connections>
+                                            <action selector="startScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R38-nO-ih3"/>
+                                        </connections>
                                     </button>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i12-EG-qJb" userLabel="V2 Mode Switch">
-                                        <rect key="frame" x="299" y="37" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enable unbounded" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wM-1M-dqA" userLabel="V2 Mode Label">
-                                        <rect key="frame" x="250" y="8" width="146" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan Size: 1.00m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK0-dS-8nl">
                                         <rect key="frame" x="83" y="591" width="249" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -49,11 +41,31 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Stop Scanning"/>
+                                        <connections>
+                                            <action selector="stopScanningPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CpF-XP-L4L"/>
+                                        </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nNt-Cu-nMg" userLabel="Scan Size Slider">
                                         <rect key="frame" x="17" y="616" width="380" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="scanSizeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="OYB-eC-Ufb"/>
+                                        </connections>
                                     </slider>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i12-EG-qJb" userLabel="V2 Mode Switch">
+                                        <rect key="frame" x="299" y="88" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="toggleV2:" destination="BYZ-38-t0r" eventType="valueChanged" id="Z1p-37-pyg"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enable unbounded" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wM-1M-dqA" userLabel="V2 Mode Label">
+                                        <rect key="frame" x="250" y="59" width="146" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connected to: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGQ-7K-wyV">
@@ -72,9 +84,12 @@
                                     <segment title="Mirror Device"/>
                                     <segment title="Scanning Device"/>
                                 </segments>
+                                <connections>
+                                    <action selector="selectDeviceTypeToggled:" destination="BYZ-38-t0r" eventType="valueChanged" id="C77-EU-Xv9"/>
+                                </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9n5-cS-dUA">
-                                <rect key="frame" x="0.0" y="56" width="414" height="784"/>
+                                <rect key="frame" x="0.0" y="112" width="414" height="728"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5F-fI-M5g">
@@ -87,7 +102,10 @@
                                         <rect key="frame" x="120" y="583" width="173" height="59"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.80677604970000005" green="0.80677604970000005" blue="0.80677604970000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Start Preview"/>
+                                        <state key="normal" title="Take New Scan"/>
+                                        <connections>
+                                            <action selector="startPreviewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ENd-1R-cu3"/>
+                                        </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CnI-mj-u3k">
                                         <rect key="frame" x="120" y="534" width="173" height="51"/>
@@ -97,6 +115,9 @@
                                         <state key="normal" title="Save Mesh">
                                             <color key="titleColor" red="0.035738641109999997" green="0.85743199479999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
+                                        <connections>
+                                            <action selector="saveMeshPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dFd-Lr-Ml3"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IB6-wU-ubo">
                                         <rect key="frame" x="139" y="291" width="124" height="34"/>
@@ -115,6 +136,9 @@
                                         <rect key="frame" x="139" y="333" width="124" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Connect"/>
+                                        <connections>
+                                            <action selector="connectToMirrorDeviceButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Jl-Hv-5hy"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
@@ -125,6 +149,7 @@
                     <connections>
                         <outlet property="IPAddressInput" destination="IB6-wU-ubo" id="OrQ-Jc-gCw"/>
                         <outlet property="IPAddressInputLabel" destination="EGg-T9-PFi" id="vBy-50-dFS"/>
+                        <outlet property="IPAddressLabel" destination="cGQ-7K-wyV" id="rqD-bm-Y1b"/>
                         <outlet property="changeHostButton" destination="P5F-fI-M5g" id="tkS-7Z-vEc"/>
                         <outlet property="connectToMirrorDeviceButton" destination="w1Z-Zd-t4q" id="53c-vS-RDp"/>
                         <outlet property="mirrorDeviceView" destination="Xam-yl-TJC" id="NOj-xU-VSp"/>
@@ -132,6 +157,7 @@
                         <outlet property="scanSizeLabel" destination="NK0-dS-8nl" id="OAa-eB-obh"/>
                         <outlet property="scanSizeSlider" destination="nNt-Cu-nMg" id="auc-uP-09c"/>
                         <outlet property="scanningDeviceView" destination="9n5-cS-dUA" id="Dy7-7N-n1r"/>
+                        <outlet property="selectDeviceType" destination="xZK-fe-fGR" id="Nl0-iO-aov"/>
                         <outlet property="startPreviewButton" destination="rZl-mW-oaS" id="5Hd-Rw-f2t"/>
                         <outlet property="startScanButton" destination="0tj-oR-lXJ" id="xq5-pJ-KuZ"/>
                         <outlet property="stopScanButton" destination="WGI-W9-ZQy" id="g8o-3W-XCD"/>
