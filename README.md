@@ -16,14 +16,14 @@ This feature allows two devices to be connected. One device captures the scan wh
 ## Setting Up Mirror Device
 
 
-1. Receive scan view
+### 1. Receive scan view
 The main purpose a mirror device is to receive the scan screen from the scanning device, so we must also configure that.
 
 ```
 [ScandyCore setReceiveRenderedStream:true];
 ```
 
-2. Send scan commands
+### 2. Send scan commands
  When we configure the mirror device to send network commands, calls to the following functions will be sent to the scanning device: `startScanning`, `stopScanning`, `generateMesh`, `setScanSize`, `setVoxelSize`, and `setNoiseFilter`. Again we have to explicitly tell the mirror device to send these.
 
 ```
@@ -32,7 +32,7 @@ The main purpose a mirror device is to receive the scan screen from the scanning
 
 _NOTE:_ `startPreview` does not get sent over the network because the preview must be started on the mirror device.
 
-3. Initialize
+### 3. Initialize
 This device needs to initialize the Roux backend but must set the scanner type to `ScandyCoreScannerType::NETWORK` to tell it not to use data generated from the scanning device.
 
 
@@ -42,7 +42,7 @@ This device needs to initialize the Roux backend but must set the scanner type t
 
 ## Setting Up the Scanning Device
 
-1. Send scan preview
+### 1. Send scan preview
 We have to tell the device to send the rendered scan preview...
 
 
@@ -50,7 +50,7 @@ We have to tell the device to send the rendered scan preview...
 [ScandyCore setSendRenderedStream:true];
 ```
 
-2. Receive scan commands
+### 2. Receive scan commands
  ... and to receive scan commands.
 Swift:
 
@@ -58,7 +58,7 @@ Swift:
 [ScandyCore setReceiveNetworkCommands:true];
 ```
 
-3. Initialize
+### 3. Initialize
 The scanning device can be initialized as you normally would.
 
 
