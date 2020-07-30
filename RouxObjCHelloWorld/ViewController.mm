@@ -54,10 +54,22 @@ bool SCAN_MODE_V2 = true;
   NSLog(@"onClientConnected");
 }
 
-- (void)onTrackingDidUpdate:(bool)is_tracking {
-  // NOTE: this is a very active callback, so don't log it as it will slow everything to a crawl
-  // NSLog(@"onTrackingDidUpdate");
+- (void)onClientDisconnected:(NSString *)host {
+    NSLog(@"onClientDisconnected");
 }
+
+- (void)onHostDiscovered:(NSString *)host {
+    NSLog(@"onHostDiscovered");
+}
+
+- (void)onLoadMesh:(ScandyCoreStatus)status {
+    NSLog(@"onLoadMesh");
+}
+
+- (void)onTrackingDidUpdate:(float)confidence withTracking:(bool)is_tracking {
+    NSLog(@"Tracking did update. Confidence: %f is_tracking: %s", confidence, is_tracking ? "true" : "false" );
+}
+
 
 - (IBAction)startScanningPressed:(id)sender {
     [self startScanning];
@@ -127,8 +139,8 @@ bool SCAN_MODE_V2 = true;
         float maxRes = 0.006; // == 6 mm
         float range = maxRes - minRes;
         double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
-         [ScandyCore setVoxelSize:voxelRes];
-         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f mm", voxelRes*1000];
+        [ScandyCore setVoxelSize:voxelRes];
+        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f mm", voxelRes*1000];
     } else {
         // the minimum size of scan volume's dimensions in meters
         double minSize = 0.2;
