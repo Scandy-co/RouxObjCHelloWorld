@@ -9,15 +9,55 @@
 
 #include "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <ScandyCoreDelegate>
 @end
 
 @implementation ViewController
 
 bool SCAN_MODE_V2 = true;
-// NOTE: if using the default bounding box offset of 0 meters from the sensor, then the
-// minimum scan size should be at least 0.2 meters for bare minimum surface scans because
-// the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
+
+- (void)onVisualizerReady:(bool)createdVisualizer {
+  NSLog(@"onVisualizerReady");
+}
+- (void) onScannerReady:(scandy::core::Status) status {
+  NSLog(@"onScannerReady");
+}
+- (void) onPreviewStart:(scandy::core::Status) status {
+  NSLog(@"onPreviewStart");
+}
+- (void) onScannerStart:(scandy::core::Status) status {
+  NSLog(@"onScannerStart");
+}
+- (void) onScannerStop:(scandy::core::Status) status {
+  NSLog(@"onScannerStop");
+//  dispatch_async(dispatch_get_main_queue(), ^{
+//    if( status == scandy::core::Status::SUCCESS) {
+//      // Generate mesh and display it in the view
+//      [ScandyCoreManager generateMesh];
+//    }
+//  });
+}
+- (void) onGenerateMesh:(scandy::core::Status) status {
+  NSLog(@"onGenerateMesh");
+}
+- (void) onSaveMesh:(scandy::core::Status) status {
+  NSLog(@"onSaveMesh");
+}
+
+// NOTE: only used in scan mode v2, which is currently experimental
+- (void) onVolumeMemoryDidUpdate:(const float) percent_full {
+  // NOTE: this is a very active callback, so don't log it as it will slow everything to a crawl
+  //NSLog(@"ScandyCoreViewController::onVolumeMemoryDidUpdate %f", percent_full);
+}
+// Network client connected callback
+- (void)onClientConnected:(NSString *)host {
+  NSLog(@"onClientConnected");
+}
+
+- (void)onTrackingDidUpdate:(bool)is_tracking {
+  // NOTE: this is a very active callback, so don't log it as it will slow everything to a crawl
+  // NSLog(@"onTrackingDidUpdate");
+}
 
 - (IBAction)startScanningPressed:(id)sender {
     [self startScanning];
@@ -48,7 +88,7 @@ bool SCAN_MODE_V2 = true;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [ScandyCore setDelegate:self];
     [ScandyCore setLicense];
     
     [self turnOnScanner];
