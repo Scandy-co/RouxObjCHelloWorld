@@ -9,27 +9,146 @@
 
 #include "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <ScandyCoreDelegate>
 @end
 
 @implementation ViewController
 
 bool SCAN_MODE_V2 = true;
-// NOTE: if using the default bounding box offset of 0 meters from the sensor, then the
-// minimum scan size should be at least 0.2 meters for bare minimum surface scans because
-// the iPhone X's TrueDepth absolute minimum depth perception is about 0.15 meters.
+NSString* meshPath = @"";
+
+- (void)onVisualizerReady:(bool)createdVisualizer {
+    NSLog(@"onVisualizerReady");
+}
+
+- (void) onScannerReady:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onScannerReady");
+        if(status == ScandyCoreStatus::SUCCESS){
+            if([self requestCamera]){
+                [ScandyCore startPreview];
+                [self setResolution];
+            }
+        }
+    });
+}
+
+- (void) onPreviewStart:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onPreviewStart");
+        if(status == ScandyCoreStatus::SUCCESS){
+            [self renderPreviewScreen];
+        }
+    });
+}
+
+- (void) onScannerStart:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onScannerStart");
+        if(status == ScandyCoreStatus::SUCCESS){
+            [self renderScanningScreen];
+        }
+    });
+}
+
+- (void) onScannerStop:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onScannerStop");
+        if(status == scandy::core::Status::SUCCESS) {
+            [ScandyCore generateMesh];
+        }
+    });
+}
+
+- (void) onGenerateMesh:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onGenerateMesh");
+        if(status == scandy::core::Status::SUCCESS) {
+            [self renderMeshScreen];
+        }
+    });
+}
+
+- (void) onSaveMesh:(scandy::core::Status) status {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"onSaveMesh");
+        NSString* message;
+        
+        if( status == ScandyCoreStatus::SUCCESS ){
+            message = [NSString stringWithFormat:@"Saved to: %@", meshPath];
+        } else {
+            message = [NSString stringWithFormat:@"Failed to save because: %@", [NSString stringWithUTF8String:scandy::core::getStatusString(status).c_str()]];
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Finished saving"
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [ScandyCore startPreview];
+    });
+}
+
+- (void)onLoadMesh:(ScandyCoreStatus)status {
+    NSLog(@"onLoadMesh");
+}
+
+// Network client connected callback
+- (void)onClientConnected:(NSString *)host {
+    NSLog(@"onClientConnected");
+}
+
+- (void)onClientDisconnected:(NSString *)host {
+    NSLog(@"onClientDisconnected");
+}
+
+- (void)onHostDiscovered:(NSString *)host {
+    NSLog(@"onHostDiscovered");
+}
+
+- (void)onTrackingDidUpdate:(float)confidence withTracking:(bool)is_tracking {
+    NSLog(@"Tracking did update. Confidence: %f is_tracking: %s", confidence, is_tracking ? "true" : "false" );
+}
+
+- (void) onVolumeMemoryDidUpdate:(const float) percent_full {
+    // NOTE: this is a very active callback, so don't log it as it will slow everything to a crawl
+    //NSLog(@"ScandyCoreViewController::onVolumeMemoryDidUpdate %f", percent_full);
+}
+
 
 - (IBAction)startScanningPressed:(id)sender {
-    [self startScanning];
+    [ScandyCore startScanning];
 }
+
 - (IBAction)stopScanningPressed:(id)sender {
-    [self stopScanning];
+    [ScandyCore stopScanning];
 }
+
 - (IBAction)saveMeshPressed:(id)sender {
-    [self saveMesh];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
+    
+    NSDate *now = [NSDate date];
+    NSString *iso8601String = [dateFormatter stringFromDate:now];
+    
+    // NOTE: You can change this to: obj, ply, or stl
+    NSString *fileTypeExt = @"ply";
+    
+    NSString *fileName = [NSString stringWithFormat:@"scandycoreiosexample_%@.%@", iso8601String, fileTypeExt];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    meshPath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    NSLog(@"saving file to: %@", meshPath);
+    
+    // save the mesh!
+    [ScandyCore saveMesh:meshPath];
 }
 - (IBAction)startPreviewPressed:(id)sender {
-    [self turnOnScanner];
+    [ScandyCore startPreview];
 }
 - (IBAction)scanSizeChanged:(id)sender {
     [self setResolution];
@@ -40,18 +159,16 @@ bool SCAN_MODE_V2 = true;
     //Need to uninitialize & reinitialize
     [ScandyCore uninitializeScanner];
     [ScandyCore toggleV2Scanning:self.v2ModeSwitch.isOn];
-    auto scannerType = scandy::core::ScannerType::TRUE_DEPTH;
-    [ScandyCore initializeScanner:scannerType];
-    [ScandyCore startPreview];
+    [ScandyCore initializeScanner];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [ScandyCore setLicense];
-    
-    [self turnOnScanner];
+    [ScandyCore setDelegate:self];      //So we can use event listeners
+    [ScandyCore setLicense];            //Searches main bundle for ScandyCoreLicense.txt
+    [ScandyCore initializeScanner];     //Initialize scanner (true depth by default)
+    // [ScandyCore initializeScanner:ScandyCoreScannerType::TRUE_DEPTH]; //Initialize as true depth scanner - same as [ScandyCore initializeScanner];
 }
 
 - (bool)requestCamera {
@@ -71,15 +188,6 @@ bool SCAN_MODE_V2 = true;
     return false;
 }
 
-- (void)turnOnScanner {
-    [self renderPreviewScreen];
-    if([self requestCamera]){
-        [ScandyCore toggleV2Scanning:SCAN_MODE_V2];
-        [ScandyCore initializeScanner];
-        [ScandyCore startPreview];
-        [self setResolution];
-    }
-}
 
 - (void)setResolution{
     if (SCAN_MODE_V2){
@@ -87,8 +195,8 @@ bool SCAN_MODE_V2 = true;
         float maxRes = 0.006; // == 6 mm
         float range = maxRes - minRes;
         double voxelRes = (range * double(self.scanSizeSlider.value)) + minRes;
-         [ScandyCore setVoxelSize:voxelRes];
-         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f mm", voxelRes*1000];
+        [ScandyCore setVoxelSize:voxelRes];
+        self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.01f mm", voxelRes*1000];
     } else {
         // the minimum size of scan volume's dimensions in meters
         double minSize = 0.2;
@@ -101,55 +209,6 @@ bool SCAN_MODE_V2 = true;
         self.scanSizeLabel.text =  [NSString stringWithFormat:@"Scan Size: %.03f m", scan_size];
     }
 }
-
-- (void)startScanning{
-    [self renderScanningScreen];
-    [ScandyCore startScanning];
-}
-
-- (void)stopScanning{
-    [self renderMeshScreen];
-    [ScandyCore stopScanning];
-    [ScandyCore generateMesh];
-}
-
--(void)saveMesh{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
-    
-    NSDate *now = [NSDate date];
-    NSString *iso8601String = [dateFormatter stringFromDate:now];
-    
-    // NOTE: You can change this to: obj, ply, or stl
-    NSString *fileTypeExt = @"ply";
-    
-    NSString *fileName = [NSString stringWithFormat:@"scandycoreiosexample_%@.%@", iso8601String, fileTypeExt];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
-    NSLog(@"save file to: %@", filePath);
-    
-    // save the mesh!
-    auto status = [ScandyCore saveMesh:filePath];
-    NSString* message;
-    
-    if( status == scandy::core::Status::SUCCESS ){
-        message = [NSString stringWithFormat:@"Saved to: %@", filePath];
-    } else {
-        message = [NSString stringWithFormat:@"Failed to save because: %@", [NSString stringWithUTF8String:scandy::core::getStatusString(status).c_str()]];
-    }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Finished saving"
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-}
-
 
 -(void) renderPreviewScreen{
     [self.scanSizeLabel setHidden:false];

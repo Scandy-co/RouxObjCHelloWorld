@@ -149,3 +149,39 @@ if([ScandyCore hasCameraPermission]){
     [ScandyCore setVoxelSize:resolution];
 }
 ```
+
+### Scandy Core Delegate
+The ScandyCoreDelegate allows us to listen to events on the Scandy Core View. In order to use the delegate you must adopt the protocol:
+
+```
+@interface ViewController () <ScandyCoreDelegate>
+```
+
+and set the delegate to self:
+
+```
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [ScandyCore setDelegate:self];
+} 
+```
+
+Then, implement all the required methods:
+
+```
+- (void)onVisualizerReady:(bool)createdVisualizer{
+  NSLog(@"onVisualizerReady");
+};
+- (void)onScannerReady:(scandy::core::Status)status;
+- (void)onPreviewStart:(scandy::core::Status)status;
+- (void)onScannerStart:(scandy::core::Status)status;
+- (void)onScannerStop:(scandy::core::Status)status;
+- (void)onGenerateMesh:(scandy::core::Status)status;
+- (void)onSaveMesh:(scandy::core::Status)status;
+- (void)onLoadMesh:(scandy::core::Status)status;
+- (void)onClientConnected:(NSString*)host;
+- (void)onClientDisconnected:(NSString*)host;
+- (void)onHostDiscovered:(NSString*)host;
+- (void)onTrackingDidUpdate:(float)confidence withTracking:(bool)is_tracking;
+- (void)onVolumeMemoryDidUpdate:(const float)percent_full;
+```
